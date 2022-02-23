@@ -21,8 +21,12 @@
     <div class="container" style="height: 30%; width: 30%">
       <canvas id="chart1" width="100" height="100"></canvas>
     </div>
+    <div class="container" style="height: 30%; width: 30%">
+      <canvas id="polarchart" width="100" height="100"></canvas>
+    </div>
     <script>
       drawLineChart();
+      drawPolarChart("Johor");
       //const dates, johor = getData();
       async function drawLineChart(dates, state) {
         const data = await getData(
@@ -131,27 +135,154 @@
             johor.cases_adult.push(columns[13]);
             johor.cases_elderly.push(columns[14]);
           } /*else if (columns[1] == "Kedah") {
-              } else if (columns[1] == "Kelantan") {
-              } else if (columns[1] == "Melaka") {
-              } else if (columns[1] == "Negeri Sembilan") {
-              } else if (columns[1] == "Pahang") {
-              } else if (columns[1] == "Perak") {
-              } else if (columns[1] == "Perlis") {
-              } else if (columns[1] == "Pulau Pinang") {
-              } else if (columns[1] == "Sabah") {
-              } else if (columns[1] == "Sarawak") {
-              } else if (columns[1] == "Selangor") {
-              } else if (columns[1] == "Terengganu") {
-              } else if (columns[1] == "W.P. Kuala Lumpur") {
-              } else if (columns[1] == "W.P. Labuan") {
-              } else if (columns[1] == "W.P. Putrajaya") {
-              }*/
+                            } else if (columns[1] == "Kelantan") {
+                            } else if (columns[1] == "Melaka") {
+                            } else if (columns[1] == "Negeri Sembilan") {
+                            } else if (columns[1] == "Pahang") {
+                            } else if (columns[1] == "Perak") {
+                            } else if (columns[1] == "Perlis") {
+                            } else if (columns[1] == "Pulau Pinang") {
+                            } else if (columns[1] == "Sabah") {
+                            } else if (columns[1] == "Sarawak") {
+                            } else if (columns[1] == "Selangor") {
+                            } else if (columns[1] == "Terengganu") {
+                            } else if (columns[1] == "W.P. Kuala Lumpur") {
+                            } else if (columns[1] == "W.P. Labuan") {
+                            } else if (columns[1] == "W.P. Putrajaya") {
+                            }*/
         });
         //console.log(johor);
         // remove duplicates from dates
         const unique_dates = Array.from(new Set(dates));
         //console.log(unique_dates);
         return { unique_dates, johor };
+      }
+
+      async function getVaxData(statename) {
+        const stateData = {
+          Partial: 0,
+          Full: 0,
+          Booster: 0,
+          accum: 0,
+        };
+        //the last 16 rows (16states)
+        const data = await fetch(
+          "covid19-public-main/vaccination/vax_state.csv"
+        ).then((response) => response.text());
+        //console.log(data);
+
+        table = data.split("\n").slice(-16);
+        console.log(table);
+        table.forEach((row) => {
+          columns = row.split(",");
+          if (columns[1] == statename) {
+            //console.log(row);
+            console.log(columns[10]);
+            stateData.Partial = columns[10];
+            stateData.Full = columns[11];
+            stateData.Booster = columns[12];
+            stateData.accum = columns[13];
+          }
+        });
+        //Data as of 23/02/2022
+        //Source: https://www.dosm.gov.my/v1/index.php?r=columnnew/populationclock
+        if (statename == "Johor") {
+          //1 million
+          data["Not Vaccinated"] =
+            3806079 - stateData.accum < 0 ? 0 : 3806079 - stateData.accum;
+        } else if (statename == "Kedah") {
+          data["Not Vaccinated"] =
+            2200646 - stateData.accum < 0 ? 0 : 2200646 - stateData.accum;
+        } else if (statename == "Kelantan") {
+          data["Not Vaccinated"] =
+            1942371 - stateData.accum < 0 ? 0 : 1942371 - stateData.accum;
+        } else if (statename == "Melaka") {
+          data["Not Vaccinated"] =
+            940706 - stateData.accum < 0 ? 0 : 940706 - stateData.accum;
+        } else if (statename == "Negeri Sembilan") {
+          data["Not Vaccinated"] =
+            1130353 - stateData.accum < 0 ? 0 : 1130353 - stateData.accum;
+        } else if (statename == "Pahang") {
+          data["Not Vaccinated"] =
+            1689033 - stateData.accum < 0 ? 0 : 1689033 - stateData.accum;
+        } else if (statename == "Perak") {
+          data["Not Vaccinated"] =
+            2509578 - stateData.accum < 0 ? 0 : 2509578 - stateData.accum;
+        } else if (statename == "Perlis") {
+          data["Not Vaccinated"] =
+            255847 - stateData.accum < 0 ? 0 : 255847 - stateData.accum;
+        } else if (statename == "Pulau Pinang") {
+          data["Not Vaccinated"] =
+            1777092 - stateData.accum < 0 ? 0 : 1777092 - stateData.accum;
+        } else if (statename == "Sabah") {
+          data["Not Vaccinated"] =
+            3811994 - stateData.accum < 0 ? 0 : 3811994 - stateData.accum;
+        } else if (statename == "Sarawak") {
+          data["Not Vaccinated"] =
+            2827540 - stateData.accum < 0 ? 0 : 2827540 - stateData.accum;
+        } else if (statename == "Selangor") {
+          data["Not Vaccinated"] =
+            6573575 - stateData.accum < 0 ? 0 : 6573575 - stateData.accum;
+        } else if (statename == "Terengganu") {
+          data["Not Vaccinated"] =
+            1284534 - stateData.accum < 0 ? 0 : 1284534 - stateData.accum;
+        } else if (statename == "W.P. Kuala Lumpur") {
+          data["Not Vaccinated"] =
+            1738314 - stateData.accum < 0 ? 0 : 1738314 - stateData.accum;
+        } else if (statename == "W.P. Labuan") {
+          data["Not Vaccinated"] =
+            100461 - stateData.accum < 0 ? 0 : 100461 - stateData.accum;
+        } else if (statename == "W.P. Putrajaya") {
+          data["Not Vaccinated"] =
+            119596 - stateData.accum < 0 ? 0 : 119596 - stateData.accum;
+        }
+
+        delete stateData.accum; // we do not want to show total accumulation on vaccination in chart
+        if (stateData["Not Vaccinated"] == 0) {
+          // if all are vaccinated, remove the data from being plotted
+          delete stateData["Not Vaccinated"];
+        }
+
+        return stateData;
+      }
+      getVaxData();
+
+      async function drawPolarChart(statename) {
+        const data = await getVaxData(statename);
+        const ctx1 = document.getElementById("polarchart").getContext("2d");
+        console.log(data);
+
+        const myChart = new Chart(ctx1, {
+          type: "polarArea",
+          data: {
+            labels: Object.keys(data),
+            datasets: [
+              {
+                data: Object.values(data),
+                backgroundColor: [
+                  "rgb(255, 99, 132)",
+                  "rgb(75, 192, 192)",
+                  "rgb(255, 205, 86)",
+                  "rgb(201, 203, 207)",
+                  "rgb(54, 162, 235)",
+                ],
+              },
+            ],
+          },
+
+          options: {
+            plugins: {
+              title: {
+                display: true,
+                text: `Number of Vaccinated Citizens in ${statename}`,
+                padding: {
+                  top: 10,
+                  bottom: 10,
+                },
+              },
+            },
+          },
+        });
       }
     </script>
   </body>
