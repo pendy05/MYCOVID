@@ -1,62 +1,158 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>COVID-19 Status in Malaysia Based on State</title>
+    <title>HTML for plotting local CSV using Chart.js</title>
 
-    <!--Link to CSS file-->
-    <link rel="stylesheet" href="css/style.css" />
+    <script src="chartFunction.js"></script>
+    <!--Chart.js CDN (Content Delivery Network) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <!--Chart.js Date Adapter CDN (Content Delivery Network) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.js"></script
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>>-->
+    <script src="css/style.css"></script>
   </head>
   <body>
-    <!--Nav bar section starts here-->
-    <nav>
-      <div class="logo">
-        <img src="images/logo.png" alt="Web Logo" class="image-responsive" />
-      </div>
-      <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="#">State Status</a>
-      <a href="#">Search</a>
-      <div class="animation start-home"></div>
-    </nav>
+    <div class="container" style="height: 30%; width: 30%">
+      <canvas id="chart1" width="100" height="100"></canvas>
+    </div>
+    <script>
+      drawLineChart();
+      //const dates, johor = getData();
+      async function drawLineChart(dates, state) {
+        const data = await getData(
+          "covid19-public-main/epidemic/cases_state.csv"
+        );
+        const ctx = document.getElementById("chart1").getContext("2d");
+        //console.log(data.unique_dates);
+        //console.log(data.johor);
+        const myChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: data.unique_dates,
+            datasets: [
+              {
+                label: "New cases",
+                data: data.johor.cases_new,
+                borderColor: "#001234",
+                backgroundColor: "#001234",
+              },
+              {
+                label: "Import Cases",
+                data: data.johor.cases_import,
+                borderColor: "#0c51ff",
+                backgroundColor: "#0c51ff",
+              },
+            ],
+          },
+          options: {
+            scales: {
+              x: {
+                type: "timeseries",
+                time: {
+                  unit: "month",
+                },
+                ticks: {
+                  score: "data",
+                },
+              },
+            },
+            elements: {
+              point: {
+                radius: 0,
+              },
+            },
 
-    <!--Nav bar section ends here-->
+            tooltips: {
+              mode: "index",
+              intersect: false,
+              callbacks: {
+                label: (item) =>
+                  item.dataset.label +
+                  ": " +
+                  this.originalValues[item.datasetIndex].data[item.dataIndex],
+              },
+            },
+            hover: {
+              mode: "index",
+              intersect: false,
+            },
+          },
+        });
+      }
 
-    <!--Header section starts here-->
-    <section class="header">
-      <div class="container">
-        <h1>MYCOVID Header</h1>
-        <h4>
-          Website for data and insights on COVID-19 situation in Malaysia.
-        </h4>
-      </div>
-    </section>
-    <!--Header section ends here-->
+      async function getData(filename) {
+        const xs = [];
+        const ys = [];
+        const dates = [];
+        const dict = {};
+        const johor = {
+          cases_new: [],
+          cases_import: [],
+          cases_recovered: [],
+          cases_active: [],
+          cases_cluster: [],
+          cases_unvax: [],
+          cases_pvax: [],
+          cases_fvax: [],
+          cases_boost: [],
+          cases_child: [],
+          cases_adolescent: [],
+          cases_adult: [],
+          cases_elderly: [],
+        };
+        const kedah = {};
 
-    <!--Overview section starts here-->
-    <section class="overview">
-      <div class="container">Overview</div>
-    </section>
-    <!--Graph 1 section ends here-->
-
-    <!--TimeLine graphs section starts here-->
-    <section class="timeline-graphs">
-      <div class="container">Timeline Graph</div>
-    </section>
-    <!--TimeLine graphs section ends here-->
-
-    <!--Footer section starts here-->
-    <section class="footer">
-      <div class="container text-center">
-        <p>
-          &copy; All Rights Reserved. Designed and Developed by Pendy Tok
-          (1181101110)
-        </p>
-      </div>
-    </section>
-    <!--Footer section ends here-->
+        const states_cases = await fetch(filename).then((response) =>
+          response.text()
+        );
+        const table = states_cases.split("\n").splice(1);
+        table.forEach((row) => {
+          columns = row.split(",");
+          dates.push(columns[0]);
+          //state
+          if (columns[1] == "Johor") {
+            johor.cases_new.push(columns[2]);
+            johor.cases_import.push(columns[3]);
+            johor.cases_recovered.push(columns[4]);
+            johor.cases_active.push(columns[5]);
+            johor.cases_cluster.push(columns[6]);
+            johor.cases_unvax.push(columns[7]);
+            johor.cases_pvax.push(columns[8]);
+            johor.cases_fvax.push(columns[9]);
+            johor.cases_boost.push(columns[10]);
+            johor.cases_child.push(columns[11]);
+            johor.cases_adolescent.push(columns[12]);
+            johor.cases_adult.push(columns[13]);
+            johor.cases_elderly.push(columns[14]);
+          } /*else if (columns[1] == "Kedah") {
+              } else if (columns[1] == "Kelantan") {
+              } else if (columns[1] == "Melaka") {
+              } else if (columns[1] == "Negeri Sembilan") {
+              } else if (columns[1] == "Pahang") {
+              } else if (columns[1] == "Perak") {
+              } else if (columns[1] == "Perlis") {
+              } else if (columns[1] == "Pulau Pinang") {
+              } else if (columns[1] == "Sabah") {
+              } else if (columns[1] == "Sarawak") {
+              } else if (columns[1] == "Selangor") {
+              } else if (columns[1] == "Terengganu") {
+              } else if (columns[1] == "W.P. Kuala Lumpur") {
+              } else if (columns[1] == "W.P. Labuan") {
+              } else if (columns[1] == "W.P. Putrajaya") {
+              }*/
+        });
+        //console.log(johor);
+        // remove duplicates from dates
+        const unique_dates = Array.from(new Set(dates));
+        //console.log(unique_dates);
+        return { unique_dates, johor };
+      }
+    </script>
   </body>
 </html>
