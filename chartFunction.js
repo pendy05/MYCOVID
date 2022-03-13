@@ -1,1 +1,0 @@
-/* Function to plot Chart using Chart.js */

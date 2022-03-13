@@ -7,6 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>COVID-19 Status in Malaysia Based on State</title>
 
+    <script src="function.js"></script>
+    <!--Chart.js CDN (Content Delivery Network) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <!--Chart.js Date Adapter CDN (Content Delivery Network) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.js"></script
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>>-->
     <!--Link to CSS file-->
     <link rel="stylesheet" href="css/style.css" />
   </head>
@@ -38,13 +47,63 @@
 
     <!--Overview section starts here-->
     <section class="overview">
-      <div class="container">Overview</div>
+      <div class="container">
+        <div class="container60">
+          <h4>Vaccinated Population</h4>
+          <p style="font-size: small">Malaysia</p>
+          <br />
+          <div class="container60">
+            <table class="nth-table" width="100%">
+              <tr>
+                <td>Daily - Administration</td>
+                <td>Total - Administration</td>
+              </tr>
+              <tr class="spaceUnder">
+                <td><h3>+6000</h3></td>
+                <td><h3>+6000</h3></td>
+              </tr>
+              <tr>
+                <td>Daily - First Dose</td>
+                <td>Total - First Dose</td>
+              </tr>
+              <tr class="spaceUnder">
+                <td><h3>+6000</h3></td>
+                <td><h3>+6000</h3></td>
+              </tr>
+              <tr>
+                <td>Daily - Second Dose</td>
+                <td>Total - Second Dose</td>
+              </tr>
+              <tr class="spaceUnder">
+                <td><h3>+6000</h3></td>
+                <td><h3>+6000</h3></td>
+              </tr>
+              <tr>
+                <td>Daily - Booster</td>
+                <td>Total - Booster</td>
+              </tr>
+              <tr class="spaceUnder">
+                <td><h3>+ 6,000</h3></td>
+                <td><h3>+ 6,000</h3></td>
+              </tr>
+            </table>
+          </div>
+          <div class="container33"></div>
+        </div>
+        <div class="container33">
+          <h4>Healthcare</h4>
+        </div>
+        <div class="clearfix"></div>
+      </div>
     </section>
     <!--Graph 1 section ends here-->
 
     <!--TimeLine graphs section starts here-->
     <section class="timeline-graphs">
-      <div class="container">Timeline Graph</div>
+      <div class="container">
+        Timeline Graph
+        <canvas id="stackedBar" width="100" height="100"></canvas>
+      </div>
     </section>
     <!--TimeLine graphs section ends here-->
 
@@ -58,5 +117,9 @@
       </div>
     </section>
     <!--Footer section ends here-->
+
+    <script>
+      drawStackedBar();
+    </script>
   </body>
 </html>
