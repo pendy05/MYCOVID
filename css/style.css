@@ -19,6 +19,18 @@
   border: 1px solid black;
 }
 
+.row {
+  width: 90%;
+  margin: 0 auto;
+  padding: 1%;
+  border: 1px solid black;
+  display: flex;
+}
+
+.container-95 {
+  border: 1px solid black;
+}
+
 .container60 {
   width: 60%;
   margin: 0 1% 0 0;
@@ -100,23 +112,37 @@ a:hover:after {
   width: 100%;
 }
 
-/*CSS for table section*/
+/*CSS for table in overview section*/
 td {
   font-weight: lighter;
   padding-bottom: 1%;
 }
 
+tr.spaceUnder > td {
+  font-size: larger;
+  padding-top: 1%;
+  padding-bottom: 3%;
+}
+
+/*CSS for Footer Section*/
+.footer {
+  background-color: aliceblue;
+}
+
+/*CSS for summary table*/
+.summarytable {
+  border: 1px solid black;
+}
+
+/*
 .nth-table {
 }
 
-/* .nth-table tr:nth-child(even) {
+ .nth-table tr:nth-child(even) {
   padding: 10%;
   background-color: #4dacff;
 } */
 
-tr.spaceUnder > td {
-  padding-bottom: 3%;
-}
 /*nav {
   position: relative;
   margin: 1%;
@@ -199,8 +225,3 @@ a:nth-child(4):hover ~ .animation {
   display: inline;
   padding: 1%;
 }*/
-
-/*CSS for Footer Section*/
-.footer {
-  background-color: aliceblue;
-}

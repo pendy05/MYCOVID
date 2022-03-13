@@ -1,62 +1,83 @@
-/* Function to plot Chart using Chart.js */
-async function drawLineChart(dates, state) {
-  const data = await getData("covid19-public-main/epidemic/cases_state.csv");
-  const ctx = document.getElementById("chart1").getContext("2d");
-  //console.log(data.unique_dates);
-  //console.log(data.johor);
-  const myChart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: data.unique_dates,
-      datasets: [
-        {
-          label: "New cases",
-          data: data.johor.cases_new,
-          borderColor: "#001234",
-          backgroundColor: "#001234",
-        },
-        {
-          label: "Import Cases",
-          data: data.johor.cases_import,
-          borderColor: "#0c51ff",
-          backgroundColor: "#0c51ff",
-        },
-      ],
-    },
-    options: {
-      scales: {
-        x: {
-          type: "timeseries",
-          time: {
-            unit: "month",
-          },
-          ticks: {
-            score: "data",
-          },
-        },
-      },
-      elements: {
-        point: {
-          radius: 0,
-        },
-      },
+//global settings for Chart.js
+Chart.defaults.font.family = "Open Sans";
 
-      tooltips: {
-        mode: "index",
-        intersect: false,
-        callbacks: {
-          label: (item) =>
-            item.dataset.label +
-            ": " +
-            this.originalValues[item.datasetIndex].data[item.dataIndex],
-        },
-      },
-      hover: {
-        mode: "index",
-        intersect: false,
-      },
-    },
+//variables to store population per state
+const johor_population = 3794200;
+const kedah_population = 2193600;
+const kelantan_population = 1928900;
+const melaka_population = 937800;
+const nsembilan_population = 1128900;
+const pahang_population = 1684700;
+const perak_population = 2509000;
+const perlis_population = 255500;
+const ppinang_population = 1774200;
+const sabah_population = 3832500;
+const sarawak_population = 2824700;
+const selangor_population = 6555100;
+const terengganu_population = 1275200;
+const kl_population = 1746600;
+const labuan_population = 100100;
+const putrajaya_population = 116100;
+
+//get data from csv file
+async function getVaxMYData() {
+  const data = await fetch("vax_malaysia.csv").then((response) =>
+    response.text()
+  );
+
+  var daily_administration = 0;
+  var daily_firstdose = 0;
+  var daily_seconddose = 0;
+  var daily_booster = 0;
+  var total_administration = 0;
+  var total_firstdose = 0;
+  var total_seconddose = 0;
+  var total_booster = 0;
+  // get the last 7 columns (recent 7 days of records)
+  table = data.split("\n").slice(-2).slice(0, 1);
+  //console.log(table);
+  table.forEach((row) => {
+    columns = row.split(",");
+    daily_administration = columns[4]
+      .toString()
+      .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    daily_firstdose = columns[1]
+      .toString()
+      .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    daily_seconddose = columns[2]
+      .toString()
+      .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    daily_booster = columns[3]
+      .toString()
+      .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    total_administration = columns[12]
+      .toString()
+      .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    total_firstdose = columns[9]
+      .toString()
+      .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    total_seconddose = columns[10]
+      .toString()
+      .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    total_booster = columns[11]
+      .toString()
+      .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    //console.log(daily_firstdose);
   });
+
+  //console.log(table[1]);
+
+  console.log(daily_administration);
+  return {
+    daily_administration,
+    daily_firstdose,
+    daily_seconddose,
+    daily_booster,
+    total_administration,
+    total_firstdose,
+    total_seconddose,
+    total_booster,
+  };
 }
 
 async function getData(filename) {
@@ -158,52 +179,56 @@ async function getVaxData(statename) {
   if (statename == "Johor") {
     //1 million
     data["Not Vaccinated"] =
-      3806079 - stateData.accum < 0 ? 0 : 3794200 - stateData.accum;
+      3806079 - stateData.accum < 0 ? 0 : johor_population - stateData.accum;
   } else if (statename == "Kedah") {
     data["Not Vaccinated"] =
-      2200646 - stateData.accum < 0 ? 0 : 2193600 - stateData.accum;
+      2200646 - stateData.accum < 0 ? 0 : kedah_population - stateData.accum;
   } else if (statename == "Kelantan") {
     data["Not Vaccinated"] =
-      1942371 - stateData.accum < 0 ? 0 : 1928900 - stateData.accum;
+      1942371 - stateData.accum < 0 ? 0 : kelantan_population - stateData.accum;
   } else if (statename == "Melaka") {
     data["Not Vaccinated"] =
-      940706 - stateData.accum < 0 ? 0 : 937800 - stateData.accum;
+      940706 - stateData.accum < 0 ? 0 : melaka_population - stateData.accum;
   } else if (statename == "Negeri Sembilan") {
     data["Not Vaccinated"] =
-      1130353 - stateData.accum < 0 ? 0 : 1128900 - stateData.accum;
+      1130353 - stateData.accum < 0
+        ? 0
+        : nsembilan_population - stateData.accum;
   } else if (statename == "Pahang") {
     data["Not Vaccinated"] =
-      1689033 - stateData.accum < 0 ? 0 : 1684700 - stateData.accum;
+      1689033 - stateData.accum < 0 ? 0 : pahang_population - stateData.accum;
   } else if (statename == "Perak") {
     data["Not Vaccinated"] =
-      2509578 - stateData.accum < 0 ? 0 : 2509000 - stateData.accum;
+      2509578 - stateData.accum < 0 ? 0 : perak_population - stateData.accum;
   } else if (statename == "Perlis") {
     data["Not Vaccinated"] =
-      255847 - stateData.accum < 0 ? 0 : 255500 - stateData.accum;
+      255847 - stateData.accum < 0 ? 0 : perlis_population - stateData.accum;
   } else if (statename == "Pulau Pinang") {
     data["Not Vaccinated"] =
-      1777092 - stateData.accum < 0 ? 0 : 1774200 - stateData.accum;
+      1777092 - stateData.accum < 0 ? 0 : ppinang_population - stateData.accum;
   } else if (statename == "Sabah") {
     data["Not Vaccinated"] =
-      3811994 - stateData.accum < 0 ? 0 : 3832500 - stateData.accum;
+      3811994 - stateData.accum < 0 ? 0 : sabah_population - stateData.accum;
   } else if (statename == "Sarawak") {
     data["Not Vaccinated"] =
-      2827540 - stateData.accum < 0 ? 0 : 2824700 - stateData.accum;
+      2827540 - stateData.accum < 0 ? 0 : sarawak_population - stateData.accum;
   } else if (statename == "Selangor") {
     data["Not Vaccinated"] =
-      6573575 - stateData.accum < 0 ? 0 : 6555100 - stateData.accum;
+      6573575 - stateData.accum < 0 ? 0 : selangor_population - stateData.accum;
   } else if (statename == "Terengganu") {
     data["Not Vaccinated"] =
-      1284534 - stateData.accum < 0 ? 0 : 1275200 - stateData.accum;
+      1284534 - stateData.accum < 0
+        ? 0
+        : terengganu_population - stateData.accum;
   } else if (statename == "W.P. Kuala Lumpur") {
     data["Not Vaccinated"] =
-      1738314 - stateData.accum < 0 ? 0 : 1746600 - stateData.accum;
+      1738314 - stateData.accum < 0 ? 0 : kl_population - stateData.accum;
   } else if (statename == "W.P. Labuan") {
     data["Not Vaccinated"] =
-      100461 - stateData.accum < 0 ? 0 : 100100 - stateData.accum;
+      100461 - stateData.accum < 0 ? 0 : labuan_population - stateData.accum;
   } else if (statename == "W.P. Putrajaya") {
     data["Not Vaccinated"] =
-      119596 - stateData.accum < 0 ? 0 : 116100 - stateData.accum;
+      119596 - stateData.accum < 0 ? 0 : putrajaya_population - stateData.accum;
   }
 
   delete stateData.accum; // we do not want to show total accumulation on vaccination in chart
@@ -215,6 +240,67 @@ async function getVaxData(statename) {
   return stateData;
 }
 getVaxData();
+
+/* Function to plot Chart using Chart.js */
+async function drawLineChart(dates, state) {
+  const data = await getData("covid19-public-main/epidemic/cases_state.csv");
+  const ctx = document.getElementById("chart1").getContext("2d");
+  //console.log(data.unique_dates);
+  //console.log(data.johor);
+  const myChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: data.unique_dates,
+      datasets: [
+        {
+          label: "New cases",
+          data: data.johor.cases_new,
+          borderColor: "#001234",
+          backgroundColor: "#001234",
+        },
+        {
+          label: "Import Cases",
+          data: data.johor.cases_import,
+          borderColor: "#0c51ff",
+          backgroundColor: "#0c51ff",
+        },
+      ],
+    },
+    options: {
+      scales: {
+        x: {
+          type: "timeseries",
+          time: {
+            unit: "month",
+          },
+          ticks: {
+            score: "data",
+          },
+        },
+      },
+      elements: {
+        point: {
+          radius: 0,
+        },
+      },
+
+      tooltips: {
+        mode: "index",
+        intersect: false,
+        callbacks: {
+          label: (item) =>
+            item.dataset.label +
+            ": " +
+            this.originalValues[item.datasetIndex].data[item.dataIndex],
+        },
+      },
+      hover: {
+        mode: "index",
+        intersect: false,
+      },
+    },
+  });
+}
 
 async function drawPolarChart(statename) {
   const data = await getVaxData(statename);
@@ -260,9 +346,17 @@ async function drawStackedBar() {
     "Kedah",
     "Kelantan",
     "Melaka",
-    "Negeri Sembilan",
+    "N. Sembilan",
     "Pahang",
     "Perak",
+    "Perlis",
+    "P. Pinang",
+    "Sabah",
+    "Sarawak",
+    "Selangor",
+    "Terengganu",
+    "KL",
+    "Labuan",
   ];
 
   const data = {
@@ -270,17 +364,26 @@ async function drawStackedBar() {
     datasets: [
       {
         label: "First Dose",
-        data: [1234, 111, 999, 1233, 122, 2345, 9090],
+        data: [
+          1234, 111, 999, 1233, 122, 2345, 9090, 1234, 111, 999, 1233, 122,
+          2345, 9090, 111111,
+        ],
         backgroundColor: "#a29bfe",
       },
       {
         label: "Second Dose",
-        data: [1234, 111, 999, 1233, 122, 2345, 9090],
+        data: [
+          1234, 111, 999, 1233, 122, 2345, 9090, 1234, 111, 999, 1233, 122,
+          2345, 9090, 111111,
+        ],
         backgroundColor: "#74b9ff",
       },
       {
         label: "Booster",
-        data: [1234, 111, 999, 1233, 122, 2345, 9090],
+        data: [
+          1234, 111, 999, 1233, 122, 2345, 9090, 1234, 111, 999, 1233, 122,
+          2345, 9090, 111111,
+        ],
         backgroundColor: "#81ecec",
       },
     ],
@@ -296,6 +399,13 @@ async function drawStackedBar() {
           display: true,
           text: "Total Vaccination Administration across Malaysia States",
         },
+        legend: {
+          labels: {
+            font: {
+              size: 10,
+            },
+          },
+        },
       },
       responsive: true,
       scales: {
@@ -305,6 +415,13 @@ async function drawStackedBar() {
         y: {
           stacked: true,
         },
+        yAxes: [
+          {
+            ticks: {
+              fontSize: 10,
+            },
+          },
+        ],
       },
     },
   });
