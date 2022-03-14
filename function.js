@@ -192,214 +192,414 @@ async function getVaxMYData() {
 
 //get cases per state data
 //
-async function getData() {
+async function getSummaryData() {
   const stateCasesData = await fetch(
-    "covid19-public-mainepidemiccases_state.csv"
-  );
+    "covid19-public-main/epidemic/cases_state.csv"
+  ).then((response) => response.text());
   const stateDeathData = await fetch(
-    "covid19-public-mainepidemicdeaths_state.csv"
-  );
+    "covid19-public-main/epidemic/deaths_state.csv"
+  ).then((response) => response.text());
 
   const stateHospitalData = await fetch(
-    "covid19-public-mainepidemichospital.csv"
-  );
+    "covid19-public-main/epidemic/hospital.csv"
+  ).then((response) => response.text());
 
   const dates = [];
-  const casesData = {
+  const stateData = {
     Johor: {
       newCases: [],
-      newCasesTrend: 0, //percent
+      newCasesTrend: "", //percent
+      avgCases: 0,
       recoveredCases: [],
-      recoveredCasesTrend: 0, //percent
+      recoveredCasesTrend: "", //percent
+      avgRecoveredCases: 0,
       newDeaths: [],
-      newDeathsTrend: [],
+      newDeathsTrend: "",
+      avgDeaths: 0,
       beds_covid: 0, //later turn into percent=> bed utilization
       hospitalAdmission: [],
-      hospitalAdmissionTrend: 0, //percent
+      hospitalAdmissionTrend: "", //percent
+      avghospitalAdmission: 0,
     },
     Kedah: {
       newCases: [],
-      newCasesTrend: 0, //percent
+      newCasesTrend: "", //percent
+      avgCases: 0,
       recoveredCases: [],
-      recoveredCasesTrend: 0, //percent
+      recoveredCasesTrend: "", //percent
+      avgRecoveredCases: 0,
       newDeaths: [],
       newDeathsTrend: [],
+      avgDeaths: 0,
       beds_covid: 0, //later turn into percent=> bed utilization
       hospitalAdmission: [],
-      hospitalAdmissionTrend: 0, //percent
+      hospitalAdmissionTrend: "", //percent
+      avghospitalAdmission: 0,
     },
     Kelantan: {
       newCases: [],
-      newCasesTrend: 0, //percent
+      newCasesTrend: "", //percent
+      avgCases: 0,
       recoveredCases: [],
-      recoveredCasesTrend: 0, //percent
+      recoveredCasesTrend: "", //percent
+      avgRecoveredCases: 0,
       newDeaths: [],
       newDeathsTrend: [],
+      avgDeaths: 0,
       beds_covid: 0, //later turn into percent=> bed utilization
       hospitalAdmission: [],
-      hospitalAdmissionTrend: 0, //percent
+      hospitalAdmissionTrend: "", //percent
+      avghospitalAdmission: 0,
     },
     Melaka: {
       newCases: [],
-      newCasesTrend: 0, //percent
+      newCasesTrend: "", //percent
+      avgCases: 0,
       recoveredCases: [],
-      recoveredCasesTrend: 0, //percent
+      recoveredCasesTrend: "", //percent
+      avgRecoveredCases: 0,
       newDeaths: [],
       newDeathsTrend: [],
+      avgDeaths: 0,
       beds_covid: 0, //later turn into percent=> bed utilization
       hospitalAdmission: [],
-      hospitalAdmissionTrend: 0, //percent
+      hospitalAdmissionTrend: "", //percent
+      avghospitalAdmission: 0,
     },
     "Negeri Sembilan": {
       newCases: [],
-      newCasesTrend: 0, //percent
+      newCasesTrend: "", //percent
+      avgCases: 0,
       recoveredCases: [],
-      recoveredCasesTrend: 0, //percent
+      recoveredCasesTrend: "", //percent
+      avgRecoveredCases: 0,
       newDeaths: [],
       newDeathsTrend: [],
+      avgDeaths: 0,
       beds_covid: 0, //later turn into percent=> bed utilization
       hospitalAdmission: [],
-      hospitalAdmissionTrend: 0, //percent
+      hospitalAdmissionTrend: "", //percent
+      avghospitalAdmission: 0,
     },
     Pahang: {
       newCases: [],
-      newCasesTrend: 0, //percent
+      newCasesTrend: "", //percent
+      avgCases: 0,
       recoveredCases: [],
-      recoveredCasesTrend: 0, //percent
+      recoveredCasesTrend: "", //percent
+      avgRecoveredCases: 0,
       newDeaths: [],
       newDeathsTrend: [],
+      avgDeaths: 0,
       beds_covid: 0, //later turn into percent=> bed utilization
       hospitalAdmission: [],
-      hospitalAdmissionTrend: 0, //percent
+      hospitalAdmissionTrend: "", //percent
+      avghospitalAdmission: 0,
     },
     Perak: {
       newCases: [],
-      newCasesTrend: 0, //percent
+      newCasesTrend: "", //percent
+      avgCases: 0,
       recoveredCases: [],
-      recoveredCasesTrend: 0, //percent
+      recoveredCasesTrend: "", //percent
+      avgRecoveredCases: 0,
       newDeaths: [],
       newDeathsTrend: [],
+      avgDeaths: 0,
       beds_covid: 0, //later turn into percent=> bed utilization
       hospitalAdmission: [],
-      hospitalAdmissionTrend: 0, //percent
+      hospitalAdmissionTrend: "", //percent
+      avghospitalAdmission: 0,
     },
     Perlis: {
       newCases: [],
-      newCasesTrend: 0, //percent
+      newCasesTrend: "", //percent
+      avgCases: 0,
       recoveredCases: [],
-      recoveredCasesTrend: 0, //percent
+      recoveredCasesTrend: "", //percent
+      avgRecoveredCases: 0,
       newDeaths: [],
       newDeathsTrend: [],
+      avgDeaths: 0,
       beds_covid: 0, //later turn into percent=> bed utilization
       hospitalAdmission: [],
-      hospitalAdmissionTrend: 0, //percent
+      hospitalAdmissionTrend: "", //percent
+      avghospitalAdmission: 0,
     },
     "Pulau Pinang": {
       newCases: [],
-      newCasesTrend: 0, //percent
+      newCasesTrend: "", //percent
+      avgCases: 0,
       recoveredCases: [],
-      recoveredCasesTrend: 0, //percent
+      recoveredCasesTrend: "", //percent
+      avgRecoveredCases: 0,
       newDeaths: [],
       newDeathsTrend: [],
+      avgDeaths: 0,
       beds_covid: 0, //later turn into percent=> bed utilization
       hospitalAdmission: [],
-      hospitalAdmissionTrend: 0, //percent
+      hospitalAdmissionTrend: "", //percent
+      avghospitalAdmission: 0,
     },
     Sabah: {
       newCases: [],
-      newCasesTrend: 0, //percent
+      newCasesTrend: "", //percent
+      avgCases: 0,
       recoveredCases: [],
-      recoveredCasesTrend: 0, //percent
+      recoveredCasesTrend: "", //percent
+      avgRecoveredCases: 0,
       newDeaths: [],
       newDeathsTrend: [],
+      avgDeaths: 0,
       beds_covid: 0, //later turn into percent=> bed utilization
       hospitalAdmission: [],
-      hospitalAdmissionTrend: 0, //percent
+      hospitalAdmissionTrend: "", //percent
+      avghospitalAdmission: 0,
     },
     Sarawak: {
       newCases: [],
-      newCasesTrend: 0, //percent
+      newCasesTrend: "", //percent
+      avgCases: 0,
       recoveredCases: [],
-      recoveredCasesTrend: 0, //percent
+      recoveredCasesTrend: "", //percent
+      avgRecoveredCases: 0,
       newDeaths: [],
       newDeathsTrend: [],
+      avgDeaths: 0,
       beds_covid: 0, //later turn into percent=> bed utilization
       hospitalAdmission: [],
-      hospitalAdmissionTrend: 0, //percent
+      hospitalAdmissionTrend: "", //percent
+      avghospitalAdmission: 0,
     },
     Selangor: {
       newCases: [],
-      newCasesTrend: 0, //percent
+      newCasesTrend: "", //percent
+      avgCases: 0,
       recoveredCases: [],
-      recoveredCasesTrend: 0, //percent
+      recoveredCasesTrend: "", //percent
+      avgRecoveredCases: 0,
       newDeaths: [],
       newDeathsTrend: [],
+      avgDeaths: 0,
       beds_covid: 0, //later turn into percent=> bed utilization
       hospitalAdmission: [],
-      hospitalAdmissionTrend: 0, //percent
+      hospitalAdmissionTrend: "", //percent
+      avghospitalAdmission: 0,
     },
     Terengganu: {
       newCases: [],
-      newCasesTrend: 0, //percent
+      newCasesTrend: "", //percent
+      avgCases: 0,
       recoveredCases: [],
-      recoveredCasesTrend: 0, //percent
+      recoveredCasesTrend: "", //percent
+      avgRecoveredCases: 0,
       newDeaths: [],
       newDeathsTrend: [],
+      avgDeaths: 0,
       beds_covid: 0, //later turn into percent=> bed utilization
       hospitalAdmission: [],
-      hospitalAdmissionTrend: 0, //percent
+      hospitalAdmissionTrend: "", //percent
+      avghospitalAdmission: 0,
     },
     "W.P. Kuala Lumpur": {
       newCases: [],
-      newCasesTrend: 0, //percent
+      newCasesTrend: "", //percent
+      avgCases: 0,
       recoveredCases: [],
-      recoveredCasesTrend: 0, //percent
+      recoveredCasesTrend: "", //percent
+      avgRecoveredCases: 0,
       newDeaths: [],
       newDeathsTrend: [],
+      avgDeaths: 0,
       beds_covid: 0, //later turn into percent=> bed utilization
       hospitalAdmission: [],
-      hospitalAdmissionTrend: 0, //percent
+      hospitalAdmissionTrend: "", //percent
+      avghospitalAdmission: 0,
     },
     "W.P. Labuan": {
       newCases: [],
-      newCasesTrend: 0, //percent
+      newCasesTrend: "", //percent
+      avgCases: 0,
       recoveredCases: [],
-      recoveredCasesTrend: 0, //percent
+      recoveredCasesTrend: "", //percent
+      avgRecoveredCases: 0,
       newDeaths: [],
       newDeathsTrend: [],
+      avgDeaths: 0,
       beds_covid: 0, //later turn into percent=> bed utilization
       hospitalAdmission: [],
-      hospitalAdmissionTrend: 0, //percent
+      hospitalAdmissionTrend: "", //percent
+      avghospitalAdmission: 0,
     },
     "W.P. Putrajaya": {
       newCases: [],
-      newCasesTrend: 0, //percent
+      newCasesTrend: "", //percent
+      avgCases: 0,
       recoveredCases: [],
-      recoveredCasesTrend: 0, //percent
+      recoveredCasesTrend: "", //percent
+      avgRecoveredCases: 0,
       newDeaths: [],
       newDeathsTrend: [],
+      avgDeaths: 0,
       beds_covid: 0, //later turn into percent=> bed utilization
       hospitalAdmission: [],
-      hospitalAdmissionTrend: 0, //percent
+      hospitalAdmissionTrend: "", //percent
+      avghospitalAdmission: 0,
     },
   };
 
+  /*
+  extract the basic info from the 3 different csv files across past 7 days
+  - new cases
+  - recovered cases
+  - death cases
+  - hospital admission case
+  - number of COVID-19 bed available
+
+  and to be modified variables
+  - avgCases
+  - avgRecoveredCases
+  - avgDeaths
+  - avghospitalAdmission
+
+  yet to have value variables
+  - newCasesTrend
+  - recoveredCasesTrend
+  - newDeathsTrend
+  - hospitalAdmissionTrend
+  */
   const casesTable = stateCasesData.split("\n").splice(113).splice(0, 112);
+  casesTable.forEach((row) => {
+    columns = row.split(",");
+    for (var statename in stateData) {
+      if (columns[1] == statename) {
+        var value = stateData[statename];
+        value.newCases.push(columns[2]);
+        value.recoveredCases.push(columns[4]);
+        value.avgCases = value.avgCases + columns[2];
+        value.avgRecoveredCases = value.avgRecoveredCases + columns[4];
+      }
+    }
+    dates.push(columns[0]);
+  });
   const hospitalTable = stateHospitalData
     .split("\n")
     .splice(113)
     .splice(0, 112);
-  const deathTable = stateDeathData.split("\n").splice(113).splice(0, 112);
-  table.forEach((row) => {
+  hospitalTable.forEach((row) => {
     columns = row.split(",");
-    dates.push(columns[0]);
-    //state
+    for (var statename in stateData) {
+      if (columns[1] == statename) {
+        var value = stateData[statename];
+        //value.beds_covid.push(columns[3]);
+        value.hospitalAdmission.push(columns[6]);
+        value.avghospitalAdmission = value.avghospitalAdmission + columns[6];
+      }
+    }
   });
-  //console.log(johor);
+  const deathTable = stateDeathData.split("\n").splice(113).splice(0, 112);
+  deathTable.forEach((row) => {
+    columns = row.split(",");
+    for (var statename in stateData) {
+      if (columns[1] == statename) {
+        var value = stateData[statename];
+        value.newDeaths.push(columns[3]);
+        value.avgDeaths = value.avgDeaths + columns[3];
+      }
+    }
+  });
+
+  /*Calculate average and trend of cases, deaths, hopsital admission and recovered case*/
+  for (var statename in stateData) {
+    var value = stateData[statename];
+
+    value.newCasesTrend =
+      value.newCases[0] == 0
+        ? "+" + value.newCases[6] + "%"
+        : value.newCases[6] - value.newCases[0] < 0
+        ? "-" +
+          Math.floor(
+            (value.newCases[6] - value.newCases[0]) / value.newCases[0]
+          ) *
+            -100 +
+          "%"
+        : value.newCases[6] - value.newCases[0] > 0
+        ? "+" +
+          Math.floor(
+            (value.newCases[6] - value.newCases[0]) / value.newCases[0]
+          ) *
+            100 +
+          "%"
+        : "0%";
+    value.avgCases = Math.floor(value.avgCases / 7);
+    value.recoveredCasesTrend =
+      value.recoveredCases[0] == 0
+        ? "+" + value.recoveredCases[6] + "%"
+        : value.recoveredCases[6] - value.recoveredCases[0] < 0
+        ? "-" +
+          Math.floor(
+            (value.recoveredCases[6] - value.recoveredCases[0]) /
+              value.recoveredCases[0]
+          ) *
+            -100 +
+          "%"
+        : value.recoveredCases[6] - value.recoveredCases[0] > 0
+        ? "+" +
+          Math.floor(
+            (value.recoveredCases[6] - value.recoveredCases[0]) /
+              value.recoveredCases[0]
+          ) *
+            100 +
+          "%"
+        : "0%";
+    value.avgRecoveredCases = Math.floor(value.avgRecoveredCases / 7);
+    value.newDeathsTrend =
+      value.newDeaths[0] == 0
+        ? "+" + value.newDeaths[6] + "%"
+        : value.newDeaths[6] - value.newDeaths[0] < 0
+        ? "-" +
+          Math.floor(
+            (value.newDeaths[6] - value.newDeaths[0]) / value.newDeaths[0]
+          ) *
+            -100 +
+          "%"
+        : value.newDeaths[6] - value.newDeaths[0] > 0
+        ? "+" +
+          Math.floor(
+            (value.newDeaths[6] - value.newDeaths[0]) / value.newDeaths[0]
+          ) *
+            100 +
+          "%"
+        : "0%";
+    value.avgDeaths = Math.floor(value.avgDeaths / 7);
+    value.hospitalAdmissionTrend =
+      value.hospitalAdmission[0] == 0
+        ? "+" + value.hospitalAdmission[6] + "%"
+        : value.hospitalAdmission[6] - value.hospitalAdmission[0] < 0
+        ? "-" +
+          Math.floor(
+            ((value.hospitalAdmission[6] - value.hospitalAdmission[0]) /
+              value.hospitalAdmission[0]) *
+              -100
+          ) +
+          "%"
+        : value.hospitalAdmission[6] - value.hospitalAdmission[0] > 0
+        ? "+" +
+          Math.floor(
+            (value.hospitalAdmission[6] - value.hospitalAdmission[0]) /
+              value.hospitalAdmission[0]
+          ) *
+            100 +
+          "%"
+        : "0%";
+    value.avghospitalAdmission = Math.floor(value.avghospitalAdmission / 7);
+  }
+
   // remove duplicates from dates
-  const unique_dates = Array.from(new Set(dates));
+  //const unique_dates = Array.from(new Set(dates));
   //console.log(unique_dates);
-  return { unique_dates, johor };
+  console.log(stateData);
+  return stateData;
 }
 
 // async function getVaxData(statename) {
