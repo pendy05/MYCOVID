@@ -1,0 +1,14 @@
+case = cases_new=+7 days
+trend = cases_new (7th) - cases_new(1st) / cases_new(1st) x 100%
+
+hospital admission 
+hospital bed utilization
+trend
+
+case_recovered = cases_recovered=+7 days
+trend = cases_recovered (7th) - cases_recovered (1st) / cases_recovered (1st) x 100%
+
+deaths =deaths_new =+ 7days
+trend =deaths_new (7th) - deaths_new(1st) / deaths_new(1st) x 100%
+
+

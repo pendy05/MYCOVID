@@ -19,7 +19,117 @@ const kl_population = 1746600;
 const labuan_population = 100100;
 const putrajaya_population = 116100;
 
-//get data from csv file
+//get vaccination data from MY states csv file
+async function getVaxStatesData() {
+  const data = await fetch(
+    "covid19-public-main\\vaccination\\vax_state.csv"
+  ).then((response) => response.text());
+
+  const stateData = {
+    Johor: {
+      Partial: 0,
+      Full: 0,
+      Booster: 0,
+    },
+    Kedah: {
+      Partial: 0,
+      Full: 0,
+      Booster: 0,
+    },
+    Kelantan: {
+      Partial: 0,
+      Full: 0,
+      Booster: 0,
+    },
+    Melaka: {
+      Partial: 0,
+      Full: 0,
+      Booster: 0,
+    },
+    "Negeri Sembilan": {
+      Partial: 0,
+      Full: 0,
+      Booster: 0,
+    },
+    Pahang: {
+      Partial: 0,
+      Full: 0,
+      Booster: 0,
+    },
+    Perak: {
+      Partial: 0,
+      Full: 0,
+      Booster: 0,
+    },
+    Perlis: {
+      Partial: 0,
+      Full: 0,
+      Booster: 0,
+    },
+    "Pulau Pinang": {
+      Partial: 0,
+      Full: 0,
+      Booster: 0,
+    },
+    Sabah: {
+      Partial: 0,
+      Full: 0,
+      Booster: 0,
+    },
+    Sarawak: {
+      Partial: 0,
+      Full: 0,
+      Booster: 0,
+    },
+    Selangor: {
+      Partial: 0,
+      Full: 0,
+      Booster: 0,
+    },
+    Terengganu: {
+      Partial: 0,
+      Full: 0,
+      Booster: 0,
+    },
+    "W.P. Kuala Lumpur": {
+      Partial: 0,
+      Full: 0,
+      Booster: 0,
+    },
+    "W.P. Labuan": {
+      Partial: 0,
+      Full: 0,
+      Booster: 0,
+    },
+    "W.P. Putrajaya": {
+      Partial: 0,
+      Full: 0,
+      Booster: 0,
+    },
+  };
+  // get the last 16 columns (last day record for 16 states)
+  table = data.split("\n").slice(-16);
+  table.forEach((row) => {
+    columns = row.split(",");
+    for (var statename in stateData) {
+      //console.log(statename);
+      //console.log(columns[1]);
+      if (columns[1] == statename) {
+        //console.log(row);
+        var value = stateData[statename];
+        //console.log(columns[10]);
+        value.Partial = columns[10];
+        value.Full = columns[11];
+        value.Booster = columns[12];
+        break;
+      }
+    }
+  });
+  //console.log(stateData);
+  return stateData;
+}
+
+//get MY vaccination data from csv file
 async function getVaxMYData() {
   const data = await fetch("vax_malaysia.csv").then((response) =>
     response.text()
@@ -33,7 +143,7 @@ async function getVaxMYData() {
   var total_firstdose = 0;
   var total_seconddose = 0;
   var total_booster = 0;
-  // get the last 7 columns (recent 7 days of records)
+  // get the last columns (last day record)
   table = data.split("\n").slice(-2).slice(0, 1);
   //console.log(table);
   table.forEach((row) => {
@@ -80,66 +190,210 @@ async function getVaxMYData() {
   };
 }
 
-async function getData(filename) {
-  const xs = [];
-  const ys = [];
-  const dates = [];
-  const dict = {};
-  const johor = {
-    cases_new: [],
-    cases_import: [],
-    cases_recovered: [],
-    cases_active: [],
-    cases_cluster: [],
-    cases_unvax: [],
-    cases_pvax: [],
-    cases_fvax: [],
-    cases_boost: [],
-    cases_child: [],
-    cases_adolescent: [],
-    cases_adult: [],
-    cases_elderly: [],
-  };
-  const kedah = {};
-
-  const states_cases = await fetch(filename).then((response) =>
-    response.text()
+//get cases per state data
+//
+async function getData() {
+  const stateCasesData = await fetch(
+    "covid19-public-mainepidemiccases_state.csv"
   );
-  const table = states_cases.split("\n").splice(1);
+  const stateDeathData = await fetch(
+    "covid19-public-mainepidemicdeaths_state.csv"
+  );
+
+  const stateHospitalData = await fetch(
+    "covid19-public-mainepidemichospital.csv"
+  );
+
+  const dates = [];
+  const casesData = {
+    Johor: {
+      newCases: [],
+      newCasesTrend: 0, //percent
+      recoveredCases: [],
+      recoveredCasesTrend: 0, //percent
+      newDeaths: [],
+      newDeathsTrend: [],
+      beds_covid: 0, //later turn into percent=> bed utilization
+      hospitalAdmission: [],
+      hospitalAdmissionTrend: 0, //percent
+    },
+    Kedah: {
+      newCases: [],
+      newCasesTrend: 0, //percent
+      recoveredCases: [],
+      recoveredCasesTrend: 0, //percent
+      newDeaths: [],
+      newDeathsTrend: [],
+      beds_covid: 0, //later turn into percent=> bed utilization
+      hospitalAdmission: [],
+      hospitalAdmissionTrend: 0, //percent
+    },
+    Kelantan: {
+      newCases: [],
+      newCasesTrend: 0, //percent
+      recoveredCases: [],
+      recoveredCasesTrend: 0, //percent
+      newDeaths: [],
+      newDeathsTrend: [],
+      beds_covid: 0, //later turn into percent=> bed utilization
+      hospitalAdmission: [],
+      hospitalAdmissionTrend: 0, //percent
+    },
+    Melaka: {
+      newCases: [],
+      newCasesTrend: 0, //percent
+      recoveredCases: [],
+      recoveredCasesTrend: 0, //percent
+      newDeaths: [],
+      newDeathsTrend: [],
+      beds_covid: 0, //later turn into percent=> bed utilization
+      hospitalAdmission: [],
+      hospitalAdmissionTrend: 0, //percent
+    },
+    "Negeri Sembilan": {
+      newCases: [],
+      newCasesTrend: 0, //percent
+      recoveredCases: [],
+      recoveredCasesTrend: 0, //percent
+      newDeaths: [],
+      newDeathsTrend: [],
+      beds_covid: 0, //later turn into percent=> bed utilization
+      hospitalAdmission: [],
+      hospitalAdmissionTrend: 0, //percent
+    },
+    Pahang: {
+      newCases: [],
+      newCasesTrend: 0, //percent
+      recoveredCases: [],
+      recoveredCasesTrend: 0, //percent
+      newDeaths: [],
+      newDeathsTrend: [],
+      beds_covid: 0, //later turn into percent=> bed utilization
+      hospitalAdmission: [],
+      hospitalAdmissionTrend: 0, //percent
+    },
+    Perak: {
+      newCases: [],
+      newCasesTrend: 0, //percent
+      recoveredCases: [],
+      recoveredCasesTrend: 0, //percent
+      newDeaths: [],
+      newDeathsTrend: [],
+      beds_covid: 0, //later turn into percent=> bed utilization
+      hospitalAdmission: [],
+      hospitalAdmissionTrend: 0, //percent
+    },
+    Perlis: {
+      newCases: [],
+      newCasesTrend: 0, //percent
+      recoveredCases: [],
+      recoveredCasesTrend: 0, //percent
+      newDeaths: [],
+      newDeathsTrend: [],
+      beds_covid: 0, //later turn into percent=> bed utilization
+      hospitalAdmission: [],
+      hospitalAdmissionTrend: 0, //percent
+    },
+    "Pulau Pinang": {
+      newCases: [],
+      newCasesTrend: 0, //percent
+      recoveredCases: [],
+      recoveredCasesTrend: 0, //percent
+      newDeaths: [],
+      newDeathsTrend: [],
+      beds_covid: 0, //later turn into percent=> bed utilization
+      hospitalAdmission: [],
+      hospitalAdmissionTrend: 0, //percent
+    },
+    Sabah: {
+      newCases: [],
+      newCasesTrend: 0, //percent
+      recoveredCases: [],
+      recoveredCasesTrend: 0, //percent
+      newDeaths: [],
+      newDeathsTrend: [],
+      beds_covid: 0, //later turn into percent=> bed utilization
+      hospitalAdmission: [],
+      hospitalAdmissionTrend: 0, //percent
+    },
+    Sarawak: {
+      newCases: [],
+      newCasesTrend: 0, //percent
+      recoveredCases: [],
+      recoveredCasesTrend: 0, //percent
+      newDeaths: [],
+      newDeathsTrend: [],
+      beds_covid: 0, //later turn into percent=> bed utilization
+      hospitalAdmission: [],
+      hospitalAdmissionTrend: 0, //percent
+    },
+    Selangor: {
+      newCases: [],
+      newCasesTrend: 0, //percent
+      recoveredCases: [],
+      recoveredCasesTrend: 0, //percent
+      newDeaths: [],
+      newDeathsTrend: [],
+      beds_covid: 0, //later turn into percent=> bed utilization
+      hospitalAdmission: [],
+      hospitalAdmissionTrend: 0, //percent
+    },
+    Terengganu: {
+      newCases: [],
+      newCasesTrend: 0, //percent
+      recoveredCases: [],
+      recoveredCasesTrend: 0, //percent
+      newDeaths: [],
+      newDeathsTrend: [],
+      beds_covid: 0, //later turn into percent=> bed utilization
+      hospitalAdmission: [],
+      hospitalAdmissionTrend: 0, //percent
+    },
+    "W.P. Kuala Lumpur": {
+      newCases: [],
+      newCasesTrend: 0, //percent
+      recoveredCases: [],
+      recoveredCasesTrend: 0, //percent
+      newDeaths: [],
+      newDeathsTrend: [],
+      beds_covid: 0, //later turn into percent=> bed utilization
+      hospitalAdmission: [],
+      hospitalAdmissionTrend: 0, //percent
+    },
+    "W.P. Labuan": {
+      newCases: [],
+      newCasesTrend: 0, //percent
+      recoveredCases: [],
+      recoveredCasesTrend: 0, //percent
+      newDeaths: [],
+      newDeathsTrend: [],
+      beds_covid: 0, //later turn into percent=> bed utilization
+      hospitalAdmission: [],
+      hospitalAdmissionTrend: 0, //percent
+    },
+    "W.P. Putrajaya": {
+      newCases: [],
+      newCasesTrend: 0, //percent
+      recoveredCases: [],
+      recoveredCasesTrend: 0, //percent
+      newDeaths: [],
+      newDeathsTrend: [],
+      beds_covid: 0, //later turn into percent=> bed utilization
+      hospitalAdmission: [],
+      hospitalAdmissionTrend: 0, //percent
+    },
+  };
+
+  const casesTable = stateCasesData.split("\n").splice(113).splice(0, 112);
+  const hospitalTable = stateHospitalData
+    .split("\n")
+    .splice(113)
+    .splice(0, 112);
+  const deathTable = stateDeathData.split("\n").splice(113).splice(0, 112);
   table.forEach((row) => {
     columns = row.split(",");
     dates.push(columns[0]);
     //state
-    if (columns[1] == "Johor") {
-      johor.cases_new.push(columns[2]);
-      johor.cases_import.push(columns[3]);
-      johor.cases_recovered.push(columns[4]);
-      johor.cases_active.push(columns[5]);
-      johor.cases_cluster.push(columns[6]);
-      johor.cases_unvax.push(columns[7]);
-      johor.cases_pvax.push(columns[8]);
-      johor.cases_fvax.push(columns[9]);
-      johor.cases_boost.push(columns[10]);
-      johor.cases_child.push(columns[11]);
-      johor.cases_adolescent.push(columns[12]);
-      johor.cases_adult.push(columns[13]);
-      johor.cases_elderly.push(columns[14]);
-    } /*else if (columns[1] == "Kedah") {
-                            } else if (columns[1] == "Kelantan") {
-                            } else if (columns[1] == "Melaka") {
-                            } else if (columns[1] == "Negeri Sembilan") {
-                            } else if (columns[1] == "Pahang") {
-                            } else if (columns[1] == "Perak") {
-                            } else if (columns[1] == "Perlis") {
-                            } else if (columns[1] == "Pulau Pinang") {
-                            } else if (columns[1] == "Sabah") {
-                            } else if (columns[1] == "Sarawak") {
-                            } else if (columns[1] == "Selangor") {
-                            } else if (columns[1] == "Terengganu") {
-                            } else if (columns[1] == "W.P. Kuala Lumpur") {
-                            } else if (columns[1] == "W.P. Labuan") {
-                            } else if (columns[1] == "W.P. Putrajaya") {
-                            }*/
   });
   //console.log(johor);
   // remove duplicates from dates
@@ -148,98 +402,124 @@ async function getData(filename) {
   return { unique_dates, johor };
 }
 
-async function getVaxData(statename) {
-  const stateData = {
-    Partial: 0,
-    Full: 0,
-    Booster: 0,
-    accum: 0,
-  };
-  //the last 16 rows (16states)
-  const data = await fetch(
-    "covid19-public-main/vaccination/vax_state.csv"
-  ).then((response) => response.text());
-  //console.log(data);
+// async function getVaxData(statename) {
+//   const stateData = {
+//     Partial: 0,
+//     Full: 0,
+//     Booster: 0,
+//     accum: 0,
+//   };
+//   //the last 16 rows (16states)
+//   const data = await fetch(
+//     "covid19-public-main/vaccination/vax_state.csv"
+//   ).then((response) => response.text());
+//   //console.log(data);
 
-  table = data.split("\n").slice(-16);
-  console.log(table);
-  table.forEach((row) => {
-    columns = row.split(",");
-    if (columns[1] == statename) {
-      //console.log(row);
-      console.log(columns[10]);
-      stateData.Partial = columns[10];
-      stateData.Full = columns[11];
-      stateData.Booster = columns[12];
-      stateData.accum = columns[13];
-    }
-  });
-  //Data as of 23/02/2022
-  //Source: https://www.dosm.gov.my/v1/index.php?r=columnnew/populationclock
-  if (statename == "Johor") {
-    //1 million
-    data["Not Vaccinated"] =
-      3806079 - stateData.accum < 0 ? 0 : johor_population - stateData.accum;
-  } else if (statename == "Kedah") {
-    data["Not Vaccinated"] =
-      2200646 - stateData.accum < 0 ? 0 : kedah_population - stateData.accum;
-  } else if (statename == "Kelantan") {
-    data["Not Vaccinated"] =
-      1942371 - stateData.accum < 0 ? 0 : kelantan_population - stateData.accum;
-  } else if (statename == "Melaka") {
-    data["Not Vaccinated"] =
-      940706 - stateData.accum < 0 ? 0 : melaka_population - stateData.accum;
-  } else if (statename == "Negeri Sembilan") {
-    data["Not Vaccinated"] =
-      1130353 - stateData.accum < 0
-        ? 0
-        : nsembilan_population - stateData.accum;
-  } else if (statename == "Pahang") {
-    data["Not Vaccinated"] =
-      1689033 - stateData.accum < 0 ? 0 : pahang_population - stateData.accum;
-  } else if (statename == "Perak") {
-    data["Not Vaccinated"] =
-      2509578 - stateData.accum < 0 ? 0 : perak_population - stateData.accum;
-  } else if (statename == "Perlis") {
-    data["Not Vaccinated"] =
-      255847 - stateData.accum < 0 ? 0 : perlis_population - stateData.accum;
-  } else if (statename == "Pulau Pinang") {
-    data["Not Vaccinated"] =
-      1777092 - stateData.accum < 0 ? 0 : ppinang_population - stateData.accum;
-  } else if (statename == "Sabah") {
-    data["Not Vaccinated"] =
-      3811994 - stateData.accum < 0 ? 0 : sabah_population - stateData.accum;
-  } else if (statename == "Sarawak") {
-    data["Not Vaccinated"] =
-      2827540 - stateData.accum < 0 ? 0 : sarawak_population - stateData.accum;
-  } else if (statename == "Selangor") {
-    data["Not Vaccinated"] =
-      6573575 - stateData.accum < 0 ? 0 : selangor_population - stateData.accum;
-  } else if (statename == "Terengganu") {
-    data["Not Vaccinated"] =
-      1284534 - stateData.accum < 0
-        ? 0
-        : terengganu_population - stateData.accum;
-  } else if (statename == "W.P. Kuala Lumpur") {
-    data["Not Vaccinated"] =
-      1738314 - stateData.accum < 0 ? 0 : kl_population - stateData.accum;
-  } else if (statename == "W.P. Labuan") {
-    data["Not Vaccinated"] =
-      100461 - stateData.accum < 0 ? 0 : labuan_population - stateData.accum;
-  } else if (statename == "W.P. Putrajaya") {
-    data["Not Vaccinated"] =
-      119596 - stateData.accum < 0 ? 0 : putrajaya_population - stateData.accum;
-  }
+//   table = data.split("\n").slice(-16);
+//   console.log(table);
+//   table.forEach((row) => {
+//     columns = row.split(",");
+//     if (columns[1] == statename) {
+//       //console.log(row);
+//       console.log(columns[10]);
+//       stateData.Partial = columns[10];
+//       stateData.Full = columns[11];
+//       stateData.Booster = columns[12];
+//       stateData.accum = columns[13];
+//     }
+//   });
+//   //Data as of 23/02/2022
+//   //Source: https://www.dosm.gov.my/v1/index.php?r=columnnew/populationclock
+//   if (statename == "Johor") {
+//     //1 million
+//     data["Not Vaccinated"] =
+//       johor_population - stateData.accum < 0
+//         ? 0
+//         : johor_population - stateData.accum;
+//   } else if (statename == "Kedah") {
+//     data["Not Vaccinated"] =
+//       kedah_population - stateData.accum < 0
+//         ? 0
+//         : kedah_population - stateData.accum;
+//   } else if (statename == "Kelantan") {
+//     data["Not Vaccinated"] =
+//       kelantan_population - stateData.accum < 0
+//         ? 0
+//         : kelantan_population - stateData.accum;
+//   } else if (statename == "Melaka") {
+//     data["Not Vaccinated"] =
+//       melaka_population - stateData.accum < 0
+//         ? 0
+//         : melaka_population - stateData.accum;
+//   } else if (statename == "Negeri Sembilan") {
+//     data["Not Vaccinated"] =
+//       nsembilan_population - stateData.accum < 0
+//         ? 0
+//         : nsembilan_population - stateData.accum;
+//   } else if (statename == "Pahang") {
+//     data["Not Vaccinated"] =
+//       pahang_population - stateData.accum < 0
+//         ? 0
+//         : pahang_population - stateData.accum;
+//   } else if (statename == "Perak") {
+//     data["Not Vaccinated"] =
+//       perak_population - stateData.accum < 0
+//         ? 0
+//         : perak_population - stateData.accum;
+//   } else if (statename == "Perlis") {
+//     data["Not Vaccinated"] =
+//       perlis_population - stateData.accum < 0
+//         ? 0
+//         : perlis_population - stateData.accum;
+//   } else if (statename == "Pulau Pinang") {
+//     data["Not Vaccinated"] =
+//       ppinang_population - stateData.accum < 0
+//         ? 0
+//         : ppinang_population - stateData.accum;
+//   } else if (statename == "Sabah") {
+//     data["Not Vaccinated"] =
+//       sabah_population - stateData.accum < 0
+//         ? 0
+//         : sabah_population - stateData.accum;
+//   } else if (statename == "Sarawak") {
+//     data["Not Vaccinated"] =
+//       sarawak_population - stateData.accum < 0
+//         ? 0
+//         : sarawak_population - stateData.accum;
+//   } else if (statename == "Selangor") {
+//     data["Not Vaccinated"] =
+//       elangor_population - stateData.accum < 0
+//         ? 0
+//         : selangor_population - stateData.accum;
+//   } else if (statename == "Terengganu") {
+//     data["Not Vaccinated"] =
+//       terengganu_population - stateData.accum < 0
+//         ? 0
+//         : terengganu_population - stateData.accum;
+//   } else if (statename == "W.P. Kuala Lumpur") {
+//     data["Not Vaccinated"] =
+//       kl_population - stateData.accum < 0 ? 0 : kl_population - stateData.accum;
+//   } else if (statename == "W.P. Labuan") {
+//     data["Not Vaccinated"] =
+//       labuan_population - stateData.accum < 0
+//         ? 0
+//         : labuan_population - stateData.accum;
+//   } else if (statename == "W.P. Putrajaya") {
+//     data["Not Vaccinated"] =
+//       putrajaya_population - stateData.accum < 0
+//         ? 0
+//         : putrajaya_population - stateData.accum;
+//   }
 
-  delete stateData.accum; // we do not want to show total accumulation on vaccination in chart
-  if (stateData["Not Vaccinated"] == 0) {
-    // if all are vaccinated, remove the data from being plotted
-    delete stateData["Not Vaccinated"];
-  }
+//   delete stateData.accum; // we do not want to show total accumulation on vaccination in chart
+//   if (stateData["Not Vaccinated"] == 0) {
+//     // if all are vaccinated, remove the data from being plotted
+//     delete stateData["Not Vaccinated"];
+//   }
 
-  return stateData;
-}
-getVaxData();
+//   return stateData;
+// }
+//getVaxData();
 
 /* Function to plot Chart using Chart.js */
 async function drawLineChart(dates, state) {
@@ -357,33 +637,39 @@ async function drawStackedBar() {
     "Terengganu",
     "KL",
     "Labuan",
+    "Putrajaya",
   ];
+
+  //get states vaccination data
+  const stateData = await getVaxStatesData();
+  //store states data based on type of vaccination
+  firstDoseData = [];
+  secondDoseData = [];
+  boosterData = [];
+  for (var statename in stateData) {
+    var value = stateData[statename];
+    //console.log(columns[10]);
+    firstDoseData.push(value.Partial);
+    secondDoseData.push(value.Full);
+    boosterData.push(value.Booster);
+  }
 
   const data = {
     labels: labels,
     datasets: [
       {
         label: "First Dose",
-        data: [
-          1234, 111, 999, 1233, 122, 2345, 9090, 1234, 111, 999, 1233, 122,
-          2345, 9090, 111111,
-        ],
+        data: firstDoseData,
         backgroundColor: "#a29bfe",
       },
       {
         label: "Second Dose",
-        data: [
-          1234, 111, 999, 1233, 122, 2345, 9090, 1234, 111, 999, 1233, 122,
-          2345, 9090, 111111,
-        ],
+        data: secondDoseData,
         backgroundColor: "#74b9ff",
       },
       {
         label: "Booster",
-        data: [
-          1234, 111, 999, 1233, 122, 2345, 9090, 1234, 111, 999, 1233, 122,
-          2345, 9090, 111111,
-        ],
+        data: boosterData,
         backgroundColor: "#81ecec",
       },
     ],

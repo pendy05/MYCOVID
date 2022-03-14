@@ -107,7 +107,7 @@
     </section>
     <!--Graph 1 section ends here-->
 
-    <!--TimeLine graphs section starts here-->
+    <!--Summary section starts here-->
     <section class="summary">
       <div class="container">
         <div class="container-95">
@@ -124,13 +124,12 @@
               <tr>
                 <td>States</td>
                 <td class="text-right">Cases</td>
-                <td class="text-right">Per 1M</td>
-                <td class="text-right">Trend</td>
-                <td class="text-right">Deaths</td>
-                <td class="text-right">Per 1M</td>
                 <td class="text-right">Trend</td>
                 <td class="text-right">Hospital Admission</td>
-                <td class="text-right">Per 1M</td>
+                <td class="text-right">Hospital Bed Utilization</td>
+                <td class="text-right">Recovered Cases</td>
+                <td class="text-right">Trend</td>
+                <td class="text-right">Deaths</td>
                 <td class="text-right">Trend</td>
               </tr>
             </table>
@@ -178,18 +177,20 @@
         document.getElementById("total_s").innerHTML = total_seconddose;
         document.getElementById("total_b").innerHTML = total_booster;
       })();
-      console.log(vaxData);
-      let { baz, foo } = (function () {
-        let foo = 0;
-        var baz = 0;
-        for (let i = 0; i <= 0; i++) {
-          foo = 3;
-          baz = 40;
-        }
-        console.log(baz);
-        return { foo, baz };
-      })();
-      console.log(baz);
+      //console.log(vaxData);
+      // let { baz, foo } = (function () {
+      //   let foo = 0;
+      //   var baz = 0;
+      //   for (let i = 0; i <= 0; i++) {
+      //     foo = 3;
+      //     baz = 40;
+      //   }
+      //   console.log(baz);
+      //   return { foo, baz };
+      // })();
+      // console.log(baz);
+
+      getVaxStatesData();
     </script>
   </body>
 </html>
