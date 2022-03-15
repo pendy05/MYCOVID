@@ -41,7 +41,24 @@
     <!--Header section starts here-->
     <section class="header" id="Home">
       <div class="container">
-        <h1>MYCOVID-19</h1>
+        <div style="display: inline-block">
+          <h1>MYCOVID-19</h1>
+        </div>
+        <div
+          style="
+            display: inline-block;
+            vertical-align: middle;
+            text-align: right;
+            width: 85%;
+          "
+        >
+          <img
+            src="images/malaysia-flag.png"
+            alt="Web Logo"
+            style="width: 5%; height: 5%"
+          />
+        </div>
+
         <h4>
           Website for data and insights on COVID-19 situation in Malaysia.
         </h4>
@@ -55,7 +72,17 @@
         <div class="container-95">
           <div class="container-100">
             <div class="container60">
-              <h4>Vaccinated Population</h4>
+              <div style="display: inline-block">
+                <h4>Vaccinated Population</h4>
+              </div>
+              <div style="display: inline-block; vertical-align: middle">
+                <img
+                  src="images/vaccine.png"
+                  alt="Web Logo"
+                  style="width: 5%; height: 5%"
+                />
+              </div>
+
               <p style="font-size: small">Malaysia</p>
             </div>
             <div class="container33">
@@ -124,7 +151,17 @@
       <div class="container">
         <div class="container-95">
           <div class="container60">
-            <h4>Summary</h4>
+            <div style="display: inline-block">
+              <h4>Summary</h4>
+            </div>
+            <div style="display: inline-block; vertical-align: middle">
+              <img
+                src="images/report.png"
+                alt="Web Logo"
+                style="width: 5%; height: 5%"
+              />
+            </div>
+
             <p style="font-size: small">At A Glance</p>
           </div>
           <div class="container33">
@@ -135,17 +172,67 @@
           </div>
           <div class="clearfix"></div>
           <div style="width: 99%; margin-left: auto; margin-right: auto">
-            <table width="100%">
+            <table width="100%" border="1">
               <tr>
-                <td>States</td>
-                <td class="text-right">Cases</td>
-                <td class="text-right">Trend</td>
-                <td class="text-right">Hospital <br />Admission</td>
-                <td class="text-right">Trend</td>
-                <td class="text-right">Recovered <br />Cases</td>
-                <td class="text-right">Trend</td>
-                <td class="text-right">Deaths</td>
-                <td class="text-right">Trend</td>
+                <th class="width-lg">
+                  <div style="display: inline">States</div>
+                  <div style="display: inline; vertical-align: middle">
+                    <img
+                      src="images/states-1.png"
+                      alt="Web Logo"
+                      style="width: 18%; height: 18%"
+                    />
+                  </div>
+                </th>
+                <th class="text-right">
+                  Cases
+                  <p style="font-weight: lighter; font-size: smaller">
+                    7 days average
+                  </p>
+                </th>
+                <th class="text-right">
+                  Trend
+                  <p style="font-weight: lighter; font-size: smaller">
+                    Past 7 days
+                  </p>
+                </th>
+                <th class="text-right">
+                  Hospital <br />Admission
+                  <p style="font-weight: lighter; font-size: smaller">
+                    7 days average
+                  </p>
+                </th>
+                <th class="text-right">
+                  Trend
+                  <p style="font-weight: lighter; font-size: smaller">
+                    Past 7 days
+                  </p>
+                </th>
+                <th class="text-right">
+                  Recovered<br />
+                  Case
+                  <p style="font-weight: lighter; font-size: smaller">
+                    7 days average
+                  </p>
+                </th>
+                <th class="text-right">
+                  Trend
+                  <p style="font-weight: lighter; font-size: smaller">
+                    Past 7 days
+                  </p>
+                </th>
+                <th class="text-right">
+                  Deaths
+                  <p style="font-weight: lighter; font-size: smaller">
+                    7 days average
+                  </p>
+                </th>
+                <th class="text-right">
+                  Trend
+                  <p style="font-weight: lighter; font-size: smaller">
+                    Past 7 days
+                  </p>
+                </th>
               </tr>
               <tr>
                 <td>Johor</td>
@@ -378,7 +465,9 @@
           total_seconddose,
           total_booster,
         } = await getVaxMYData();
-        console.log(daily_booster);
+        const stateData = await getVaxStatesData();
+        //console.log(stateData);
+        //console.log(daily_booster);
         document.getElementById("daily_a").innerHTML =
           "+ " + daily_administration;
         document.getElementById("daily_f").innerHTML = "+ " + daily_firstdose;

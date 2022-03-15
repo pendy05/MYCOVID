@@ -21,7 +21,7 @@ const putrajaya_population = 116100;
 
 //get vaccination data from MY states csv file
 async function getVaxStatesData() {
-  const data = await fetch("data\\vax_state.csv").then((response) =>
+  const data = await fetch("data/vax_state.csv").then((response) =>
     response.text()
   );
 
@@ -108,7 +108,7 @@ async function getVaxStatesData() {
     },
   };
   // get the last 16 columns (last day record for 16 states)
-  table = data.split("\n").slice(-16);
+  table = data.split("\n").slice(-17).splice(0, 16);
   table.forEach((row) => {
     columns = row.split(",");
     for (var statename in stateData) {
@@ -530,13 +530,14 @@ async function getSummaryData() {
           "%"
         : "0%";
     value.avgCases = Math.floor(
-      value.avgCases[0] +
+      (value.avgCases[0] +
         value.avgCases[1] +
         value.avgCases[2] +
         value.avgCases[3] +
         value.avgCases[4] +
         value.avgCases[5] +
-        value.avgCases[6] / 7
+        value.avgCases[6]) /
+        7
     );
     value.recoveredCasesTrend =
       value.recoveredCases[0] == 0
@@ -559,13 +560,14 @@ async function getSummaryData() {
           "%"
         : "0%";
     value.avgRecoveredCases = Math.floor(
-      value.avgRecoveredCases[0] +
+      (value.avgRecoveredCases[0] +
         value.avgRecoveredCases[1] +
         value.avgRecoveredCases[2] +
         value.avgRecoveredCases[3] +
         value.avgRecoveredCases[4] +
         value.avgRecoveredCases[5] +
-        value.avgRecoveredCases[6] / 7
+        value.avgRecoveredCases[6]) /
+        7
     );
     value.newDeathsTrend =
       value.newDeaths[0] == 0
@@ -586,13 +588,14 @@ async function getSummaryData() {
           "%"
         : "0%";
     value.avgDeaths = Math.floor(
-      value.avgDeaths[0] +
+      (value.avgDeaths[0] +
         value.avgDeaths[1] +
         value.avgDeaths[2] +
         value.avgDeaths[3] +
         value.avgDeaths[4] +
         value.avgDeaths[5] +
-        value.avgDeaths[6] / 7
+        value.avgDeaths[6]) /
+        7
     );
     value.hospitalAdmissionTrend =
       value.hospitalAdmission[0] == 0
@@ -615,20 +618,21 @@ async function getSummaryData() {
           "%"
         : "0%";
     value.avghospitalAdmission = Math.floor(
-      value.avghospitalAdmission[0] +
+      (value.avghospitalAdmission[0] +
         value.avghospitalAdmission[1] +
         value.avghospitalAdmission[2] +
         value.avghospitalAdmission[3] +
         value.avghospitalAdmission[4] +
         value.avghospitalAdmission[5] +
-        value.avghospitalAdmission[6] / 7
+        value.avghospitalAdmission[6]) /
+        7
     );
   }
 
   // remove duplicates from dates
   //const unique_dates = Array.from(new Set(dates));
   //console.log(unique_dates);
-  console.log(stateData);
+  //console.log(stateData);
   return stateData;
 }
 
@@ -753,13 +757,14 @@ async function drawStackedBar() {
 
   //get states vaccination data
   const stateData = await getVaxStatesData();
+  //console.log(stateData);
   //store states data based on type of vaccination
   firstDoseData = [];
   secondDoseData = [];
   boosterData = [];
   for (var statename in stateData) {
     var value = stateData[statename];
-    //console.log(columns[10]);
+    //console.log(value);
     firstDoseData.push(value.Partial);
     secondDoseData.push(value.Full);
     boosterData.push(value.Booster);

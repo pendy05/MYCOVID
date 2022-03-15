@@ -51,11 +51,21 @@
     </div>
 
     <!--Nav bar section ends here-->
-    <div class="container"><br /><br /><br /><br /></div>
+    <div class="container"><br /><br /></div>
     <!--Header section starts here-->
     <section class="header" id="Home">
         <div class="container">
-            <h1>MYCOVID-19</h1>
+            <div style="display: inline-block">
+                <h1>MYCOVID-19</h1>
+            </div>
+            <div style="
+            display: inline-block;
+            vertical-align: middle;
+            text-align: right;
+            width: 85%;
+          ">
+                <img src="images/malaysia-flag.png" alt="Web Logo" style="width: 5%; height: 5%" />
+            </div>
             <h4>
                 Website for data and insights on COVID-19 situation in Malaysia.
             </h4>
@@ -64,12 +74,19 @@
     <!--Header section ends here-->
 
     <!--Overview section starts here-->
-    <section class="overview" id="Vaccination">
-        <div class="container">
+
+    <section class="overview">
+
+        <div class="container" id="Vaccination">
             <div class="container-95">
                 <div class="container-100">
                     <div class="container60">
-                        <h4>Vaccinated Population</h4>
+                        <div style="display: inline-block">
+                            <h4>Vaccinated Population</h4>
+                        </div>
+                        <div style="display: inline-block; vertical-align: middle">
+                            <img src="images/vaccine.png" alt="vaccine logo" style="width: 5%; height: 5%" />
+                        </div>
                         <p style="font-size: small">Malaysia</p>
                     </div>
                     <div class="container33">
@@ -78,7 +95,7 @@
                     <div class="clearfix"></div>
                 </div>
 
-                <br />
+
                 <div class="container60">
                     <br /><br />
                     <table class="nth-table" id="overview-table" width="90%">
@@ -137,226 +154,282 @@
                 </div>
                 <div class="clearfix"></div>
             </div>
-            <!-- <div class="container33">
-          <h4></h4>
-          <canvas id="stackedBar" width="100" height="90"></canvas>
-        </div> -->
             <div class="clearfix"></div>
+
         </div>
+
     </section>
     <!--Overview section ends here-->
 
     <!--Summary section starts here-->
     <section class="summary" id="Summary">
+
         <div class="container">
             <div class="container-95">
-                <div class="container60">
-                    <h4>Summary</h4>
-                    <p style="font-size: small">At A Glance</p>
-                </div>
-                <div class="container33">
-                    <p style="font-size: small; text-align: right" id="summary-date"></p>
-                </div>
-                <div class="clearfix"></div>
-                <div style="width: 99%; margin-left: auto; margin-right: auto">
-                    <table width="100%">
-                        <tr>
-                            <td>States</td>
-                            <td class="text-right">Cases</td>
-                            <td class="text-right">Trend</td>
-                            <td class="text-right">Hospital <br />Admission</td>
-                            <td class="text-right">Trend</td>
-                            <td class="text-right">Recovered <br />Cases</td>
-                            <td class="text-right">Trend</td>
-                            <td class="text-right">Deaths</td>
-                            <td class="text-right">Trend</td>
-                        </tr>
-                        <tr>
-                            <td>Johor</td>
-                            <td class="text-right" id="johor-cases"></td>
-                            <td class="text-right" id="johor-caseT"></td>
-                            <td class="text-right" id="johor-hospitalA"></td>
-                            <td class="text-right" id="johor-hospitalT"></td>
-                            <td class="text-right" id="johor-recovered"></td>
-                            <td class="text-right" id="johor-recoveredT"></td>
-                            <td class="text-right" id="johor-deaths"></td>
-                            <td class="text-right" id="johor-deathsT"></td>
-                        </tr>
-                        <tr>
-                            <td>Kedah</td>
-                            <td class="text-right" id="kedah-cases"></td>
-                            <td class="text-right" id="kedah-caseT"></td>
-                            <td class="text-right" id="kedah-hospitalA"></td>
-                            <td class="text-right" id="kedah-hospitalT"></td>
-                            <td class="text-right" id="kedah-recovered"></td>
-                            <td class="text-right" id="kedah-recoveredT"></td>
-                            <td class="text-right" id="kedah-deaths"></td>
-                            <td class="text-right" id="kedah-deathsT"></td>
-                        </tr>
-                        <tr>
-                            <td>Kelantan</td>
-                            <td class="text-right" id="kltn-cases"></td>
-                            <td class="text-right" id="kltn-caseT"></td>
-                            <td class="text-right" id="kltn-hospitalA"></td>
-                            <td class="text-right" id="kltn-hospitalT"></td>
-                            <td class="text-right" id="kltn-recovered"></td>
-                            <td class="text-right" id="kltn-recoveredT"></td>
-                            <td class="text-right" id="kltn-deaths"></td>
-                            <td class="text-right" id="kltn-deathsT"></td>
-                        </tr>
-                        <tr>
-                            <td>Melaka</td>
-                            <td class="text-right" id="mlk-cases"></td>
-                            <td class="text-right" id="mlk-caseT"></td>
-                            <td class="text-right" id="mlk-hospitalA"></td>
-                            <td class="text-right" id="mlk-hospitalT"></td>
-                            <td class="text-right" id="mlk-recovered"></td>
-                            <td class="text-right" id="mlk-recoveredT"></td>
-                            <td class="text-right" id="mlk-deaths"></td>
-                            <td class="text-right" id="mlk-deathsT"></td>
-                        </tr>
-                        <tr>
-                            <td>N. Sembilan</td>
-                            <td class="text-right" id="n9-cases"></td>
-                            <td class="text-right" id="n9-caseT"></td>
-                            <td class="text-right" id="n9-hospitalA"></td>
-                            <td class="text-right" id="n9-hospitalT"></td>
-                            <td class="text-right" id="n9-recovered"></td>
-                            <td class="text-right" id="n9-recoveredT"></td>
-                            <td class="text-right" id="n9-deaths"></td>
-                            <td class="text-right" id="n9-deathsT"></td>
-                        </tr>
-                        <tr>
-                            <td>Pahang</td>
-                            <td class="text-right" id="pahang-cases"></td>
-                            <td class="text-right" id="pahang-caseT"></td>
-                            <td class="text-right" id="pahang-hospitalA"></td>
-                            <td class="text-right" id="pahang-hospitalT"></td>
-                            <td class="text-right" id="pahang-recovered"></td>
-                            <td class="text-right" id="pahang-recoveredT"></td>
-                            <td class="text-right" id="pahang-deaths"></td>
-                            <td class="text-right" id="pahang-deathsT"></td>
-                        </tr>
-                        <tr>
-                            <td>Perak</td>
-                            <td class="text-right" id="perak-cases"></td>
-                            <td class="text-right" id="perak-caseT"></td>
-                            <td class="text-right" id="perak-hospitalA"></td>
-                            <td class="text-right" id="perak-hospitalT"></td>
-                            <td class="text-right" id="perak-recovered"></td>
-                            <td class="text-right" id="perak-recoveredT"></td>
-                            <td class="text-right" id="perak-deaths"></td>
-                            <td class="text-right" id="perak-deathsT"></td>
-                        </tr>
-                        <tr>
-                            <td>Perlis</td>
-                            <td class="text-right" id="perlis-cases"></td>
-                            <td class="text-right" id="perlis-caseT"></td>
-                            <td class="text-right" id="perlis-hospitalA"></td>
-                            <td class="text-right" id="perlis-hospitalT"></td>
-                            <td class="text-right" id="perlis-recovered"></td>
-                            <td class="text-right" id="perlis-recoveredT"></td>
-                            <td class="text-right" id="perlis-deaths"></td>
-                            <td class="text-right" id="perlis-deathsT"></td>
-                        </tr>
-                        <tr>
-                            <td>P. Pinang</td>
-                            <td class="text-right" id="ppinang-cases"></td>
-                            <td class="text-right" id="ppinang-caseT"></td>
-                            <td class="text-right" id="ppinang-hospitalA"></td>
-                            <td class="text-right" id="ppinang-hospitalT"></td>
-                            <td class="text-right" id="ppinang-recovered"></td>
-                            <td class="text-right" id="ppinang-recoveredT"></td>
-                            <td class="text-right" id="ppinang-deaths"></td>
-                            <td class="text-right" id="ppinang-deathsT"></td>
-                        </tr>
-                        <tr>
-                            <td>Sabah</td>
-                            <td class="text-right" id="sabah-cases"></td>
-                            <td class="text-right" id="sabah-caseT"></td>
-                            <td class="text-right" id="sabah-hospitalA"></td>
-                            <td class="text-right" id="sabah-hospitalT"></td>
-                            <td class="text-right" id="sabah-recovered"></td>
-                            <td class="text-right" id="sabah-recoveredT"></td>
-                            <td class="text-right" id="sabah-deaths"></td>
-                            <td class="text-right" id="sabah-deathsT"></td>
-                        </tr>
-                        <tr>
-                            <td>Sarawak</td>
-                            <td class="text-right" id="srwk-cases"></td>
-                            <td class="text-right" id="srwk-caseT"></td>
-                            <td class="text-right" id="srwk-hospitalA"></td>
-                            <td class="text-right" id="srwk-hospitalT"></td>
-                            <td class="text-right" id="srwk-recovered"></td>
-                            <td class="text-right" id="srwk-recoveredT"></td>
-                            <td class="text-right" id="srwk-deaths"></td>
-                            <td class="text-right" id="srwk-deathsT"></td>
-                        </tr>
-                        <tr>
-                            <td>Selangor</td>
-                            <td class="text-right" id="slngr-cases"></td>
-                            <td class="text-right" id="slngr-caseT"></td>
-                            <td class="text-right" id="slngr-hospitalA"></td>
-                            <td class="text-right" id="slngr-hospitalT"></td>
-                            <td class="text-right" id="slngr-recovered"></td>
-                            <td class="text-right" id="slngr-recoveredT"></td>
-                            <td class="text-right" id="slngr-deaths"></td>
-                            <td class="text-right" id="slngr-deathsT"></td>
-                        </tr>
-                        <tr>
-                            <td>Terengganu</td>
-                            <td class="text-right" id="trg-cases"></td>
-                            <td class="text-right" id="trg-caseT"></td>
-                            <td class="text-right" id="trg-hospitalA"></td>
-                            <td class="text-right" id="trg-hospitalT"></td>
-                            <td class="text-right" id="trg-recovered"></td>
-                            <td class="text-right" id="trg-recoveredT"></td>
-                            <td class="text-right" id="trg-deaths"></td>
-                            <td class="text-right" id="trg-deathsT"></td>
-                        </tr>
-                        <tr>
-                            <td>KL</td>
-                            <td class="text-right" id="kl-cases"></td>
-                            <td class="text-right" id="kl-caseT"></td>
-                            <td class="text-right" id="kl-hospitalA"></td>
-                            <td class="text-right" id="kl-hospitalT"></td>
-                            <td class="text-right" id="kl-recovered"></td>
-                            <td class="text-right" id="kl-recoveredT"></td>
-                            <td class="text-right" id="kl-deaths"></td>
-                            <td class="text-right" id="kl-deathsT"></td>
-                        </tr>
-                        <tr>
-                            <td>Labuan</td>
-                            <td class="text-right" id="labuan-cases"></td>
-                            <td class="text-right" id="labuan-caseT"></td>
-                            <td class="text-right" id="labuan-hospitalA"></td>
-                            <td class="text-right" id="labuan-hospitalT"></td>
-                            <td class="text-right" id="labuan-recovered"></td>
-                            <td class="text-right" id="labuan-recoveredT"></td>
-                            <td class="text-right" id="labuan-deaths"></td>
-                            <td class="text-right" id="labuan-deathsT"></td>
-                        </tr>
-                        <tr>
-                            <td>Putrajaya</td>
-                            <td class="text-right" id="ptjy-cases"></td>
-                            <td class="text-right" id="ptjy-caseT"></td>
-                            <td class="text-right" id="ptjy-hospitalA"></td>
-                            <td class="text-right" id="ptjy-hospitalT"></td>
-                            <td class="text-right" id="ptjy-recovered"></td>
-                            <td class="text-right" id="ptjy-recoveredT"></td>
-                            <td class="text-right" id="ptjy-deaths"></td>
-                            <td class="text-right" id="ptjy-deathsT"></td>
-                        </tr>
-                    </table>
+                <div class="container-100">
+
+                    <div class="container60">
+                        <div style="display: inline-block">
+                            <h4>Summary</h4>
+                        </div>
+                        <div style="display: inline-block; vertical-align: middle">
+                            <img src="images/report.png" alt="Web Logo" style="width: 5%; height: 5%" />
+                        </div>
+                        <p style="font-size: small">At A Glance</p>
+                    </div>
+                    <div class="container33">
+                        <p style="font-size: small; text-align: right" id="summary-date"></p>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <br>
+                    <div class="clearfix"></div>
+                    <div style="width: 99%; margin-left: auto; margin-right: auto">
+                        <table width="100%" border="1px" style="border-collapse:collapse;">
+                            <tr>
+                                <th class="width-lg">
+                                    <div style="display: inline">States</div>
+                                    <div style="display: inline; vertical-align: middle">
+                                        <img src="images/states-1.png" alt="Web Logo" style="width: 18%; height: 18%" />
+                                    </div>
+                                </th>
+                                <th class="text-right">
+                                    Cases
+                                    <p style="font-weight: lighter; font-size: smaller">
+                                        7 days average
+                                    </p>
+                                </th>
+                                <th class="text-right">
+                                    Trend
+                                    <p style="font-weight: lighter; font-size: smaller">
+                                        Past 7 days
+                                    </p>
+                                </th>
+                                <th class="text-right">
+                                    Hospital <br />Admission
+                                    <p style="font-weight: lighter; font-size: smaller">
+                                        7 days average
+                                    </p>
+                                </th>
+                                <th class="text-right">
+                                    Trend
+                                    <p style="font-weight: lighter; font-size: smaller">
+                                        Past 7 days
+                                    </p>
+                                </th>
+                                <th class="text-right">
+                                    Recovered<br />
+                                    Case
+                                    <p style="font-weight: lighter; font-size: smaller">
+                                        7 days average
+                                    </p>
+                                </th>
+                                <th class="text-right">
+                                    Trend
+                                    <p style="font-weight: lighter; font-size: smaller">
+                                        Past 7 days
+                                    </p>
+                                </th>
+                                <th class="text-right">
+                                    Deaths
+                                    <p style="font-weight: lighter; font-size: smaller">
+                                        7 days average
+                                    </p>
+                                </th>
+                                <th class="text-right">
+                                    Trend
+                                    <p style="font-weight: lighter; font-size: smaller">
+                                        Past 7 days
+                                    </p>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>Johor</td>
+                                <td class="text-right" id="johor-cases"></td>
+                                <td class="text-right" id="johor-caseT"></td>
+                                <td class="text-right" id="johor-hospitalA"></td>
+                                <td class="text-right" id="johor-hospitalT"></td>
+                                <td class="text-right" id="johor-recovered"></td>
+                                <td class="text-right" id="johor-recoveredT"></td>
+                                <td class="text-right" id="johor-deaths"></td>
+                                <td class="text-right" id="johor-deathsT"></td>
+                            </tr>
+                            <tr>
+                                <td>Kedah</td>
+                                <td class="text-right" id="kedah-cases"></td>
+                                <td class="text-right" id="kedah-caseT"></td>
+                                <td class="text-right" id="kedah-hospitalA"></td>
+                                <td class="text-right" id="kedah-hospitalT"></td>
+                                <td class="text-right" id="kedah-recovered"></td>
+                                <td class="text-right" id="kedah-recoveredT"></td>
+                                <td class="text-right" id="kedah-deaths"></td>
+                                <td class="text-right" id="kedah-deathsT"></td>
+                            </tr>
+                            <tr>
+                                <td>Kelantan</td>
+                                <td class="text-right" id="kltn-cases"></td>
+                                <td class="text-right" id="kltn-caseT"></td>
+                                <td class="text-right" id="kltn-hospitalA"></td>
+                                <td class="text-right" id="kltn-hospitalT"></td>
+                                <td class="text-right" id="kltn-recovered"></td>
+                                <td class="text-right" id="kltn-recoveredT"></td>
+                                <td class="text-right" id="kltn-deaths"></td>
+                                <td class="text-right" id="kltn-deathsT"></td>
+                            </tr>
+                            <tr>
+                                <td>Melaka</td>
+                                <td class="text-right" id="mlk-cases"></td>
+                                <td class="text-right" id="mlk-caseT"></td>
+                                <td class="text-right" id="mlk-hospitalA"></td>
+                                <td class="text-right" id="mlk-hospitalT"></td>
+                                <td class="text-right" id="mlk-recovered"></td>
+                                <td class="text-right" id="mlk-recoveredT"></td>
+                                <td class="text-right" id="mlk-deaths"></td>
+                                <td class="text-right" id="mlk-deathsT"></td>
+                            </tr>
+                            <tr>
+                                <td>N. Sembilan</td>
+                                <td class="text-right" id="n9-cases"></td>
+                                <td class="text-right" id="n9-caseT"></td>
+                                <td class="text-right" id="n9-hospitalA"></td>
+                                <td class="text-right" id="n9-hospitalT"></td>
+                                <td class="text-right" id="n9-recovered"></td>
+                                <td class="text-right" id="n9-recoveredT"></td>
+                                <td class="text-right" id="n9-deaths"></td>
+                                <td class="text-right" id="n9-deathsT"></td>
+                            </tr>
+                            <tr>
+                                <td>Pahang</td>
+                                <td class="text-right" id="pahang-cases"></td>
+                                <td class="text-right" id="pahang-caseT"></td>
+                                <td class="text-right" id="pahang-hospitalA"></td>
+                                <td class="text-right" id="pahang-hospitalT"></td>
+                                <td class="text-right" id="pahang-recovered"></td>
+                                <td class="text-right" id="pahang-recoveredT"></td>
+                                <td class="text-right" id="pahang-deaths"></td>
+                                <td class="text-right" id="pahang-deathsT"></td>
+                            </tr>
+                            <tr>
+                                <td>Perak</td>
+                                <td class="text-right" id="perak-cases"></td>
+                                <td class="text-right" id="perak-caseT"></td>
+                                <td class="text-right" id="perak-hospitalA"></td>
+                                <td class="text-right" id="perak-hospitalT"></td>
+                                <td class="text-right" id="perak-recovered"></td>
+                                <td class="text-right" id="perak-recoveredT"></td>
+                                <td class="text-right" id="perak-deaths"></td>
+                                <td class="text-right" id="perak-deathsT"></td>
+                            </tr>
+                            <tr>
+                                <td>Perlis</td>
+                                <td class="text-right" id="perlis-cases"></td>
+                                <td class="text-right" id="perlis-caseT"></td>
+                                <td class="text-right" id="perlis-hospitalA"></td>
+                                <td class="text-right" id="perlis-hospitalT"></td>
+                                <td class="text-right" id="perlis-recovered"></td>
+                                <td class="text-right" id="perlis-recoveredT"></td>
+                                <td class="text-right" id="perlis-deaths"></td>
+                                <td class="text-right" id="perlis-deathsT"></td>
+                            </tr>
+                            <tr>
+                                <td>P. Pinang</td>
+                                <td class="text-right" id="ppinang-cases"></td>
+                                <td class="text-right" id="ppinang-caseT"></td>
+                                <td class="text-right" id="ppinang-hospitalA"></td>
+                                <td class="text-right" id="ppinang-hospitalT"></td>
+                                <td class="text-right" id="ppinang-recovered"></td>
+                                <td class="text-right" id="ppinang-recoveredT"></td>
+                                <td class="text-right" id="ppinang-deaths"></td>
+                                <td class="text-right" id="ppinang-deathsT"></td>
+                            </tr>
+                            <tr>
+                                <td>Sabah</td>
+                                <td class="text-right" id="sabah-cases"></td>
+                                <td class="text-right" id="sabah-caseT"></td>
+                                <td class="text-right" id="sabah-hospitalA"></td>
+                                <td class="text-right" id="sabah-hospitalT"></td>
+                                <td class="text-right" id="sabah-recovered"></td>
+                                <td class="text-right" id="sabah-recoveredT"></td>
+                                <td class="text-right" id="sabah-deaths"></td>
+                                <td class="text-right" id="sabah-deathsT"></td>
+                            </tr>
+                            <tr>
+                                <td>Sarawak</td>
+                                <td class="text-right" id="srwk-cases"></td>
+                                <td class="text-right" id="srwk-caseT"></td>
+                                <td class="text-right" id="srwk-hospitalA"></td>
+                                <td class="text-right" id="srwk-hospitalT"></td>
+                                <td class="text-right" id="srwk-recovered"></td>
+                                <td class="text-right" id="srwk-recoveredT"></td>
+                                <td class="text-right" id="srwk-deaths"></td>
+                                <td class="text-right" id="srwk-deathsT"></td>
+                            </tr>
+                            <tr>
+                                <td>Selangor</td>
+                                <td class="text-right" id="slngr-cases"></td>
+                                <td class="text-right" id="slngr-caseT"></td>
+                                <td class="text-right" id="slngr-hospitalA"></td>
+                                <td class="text-right" id="slngr-hospitalT"></td>
+                                <td class="text-right" id="slngr-recovered"></td>
+                                <td class="text-right" id="slngr-recoveredT"></td>
+                                <td class="text-right" id="slngr-deaths"></td>
+                                <td class="text-right" id="slngr-deathsT"></td>
+                            </tr>
+                            <tr>
+                                <td>Terengganu</td>
+                                <td class="text-right" id="trg-cases"></td>
+                                <td class="text-right" id="trg-caseT"></td>
+                                <td class="text-right" id="trg-hospitalA"></td>
+                                <td class="text-right" id="trg-hospitalT"></td>
+                                <td class="text-right" id="trg-recovered"></td>
+                                <td class="text-right" id="trg-recoveredT"></td>
+                                <td class="text-right" id="trg-deaths"></td>
+                                <td class="text-right" id="trg-deathsT"></td>
+                            </tr>
+                            <tr>
+                                <td>KL</td>
+                                <td class="text-right" id="kl-cases"></td>
+                                <td class="text-right" id="kl-caseT"></td>
+                                <td class="text-right" id="kl-hospitalA"></td>
+                                <td class="text-right" id="kl-hospitalT"></td>
+                                <td class="text-right" id="kl-recovered"></td>
+                                <td class="text-right" id="kl-recoveredT"></td>
+                                <td class="text-right" id="kl-deaths"></td>
+                                <td class="text-right" id="kl-deathsT"></td>
+                            </tr>
+                            <tr>
+                                <td>Labuan</td>
+                                <td class="text-right" id="labuan-cases"></td>
+                                <td class="text-right" id="labuan-caseT"></td>
+                                <td class="text-right" id="labuan-hospitalA"></td>
+                                <td class="text-right" id="labuan-hospitalT"></td>
+                                <td class="text-right" id="labuan-recovered"></td>
+                                <td class="text-right" id="labuan-recoveredT"></td>
+                                <td class="text-right" id="labuan-deaths"></td>
+                                <td class="text-right" id="labuan-deathsT"></td>
+                            </tr>
+                            <tr>
+                                <td>Putrajaya</td>
+                                <td class="text-right" id="ptjy-cases"></td>
+                                <td class="text-right" id="ptjy-caseT"></td>
+                                <td class="text-right" id="ptjy-hospitalA"></td>
+                                <td class="text-right" id="ptjy-hospitalT"></td>
+                                <td class="text-right" id="ptjy-recovered"></td>
+                                <td class="text-right" id="ptjy-recoveredT"></td>
+                                <td class="text-right" id="ptjy-deaths"></td>
+                                <td class="text-right" id="ptjy-deathsT"></td>
+                            </tr>
+                        </table>
+                        <br>
+                    </div>
                 </div>
             </div>
-        </div>
     </section>
     <!--TimeLine graphs section ends here-->
 
     <!--Footer section starts here-->
     <section class="footer">
-        <div class="container text-center">
+        <div class="text-center">
             <p>
                 &copy; All Rights Reserved. Designed and Developed by Pendy Tok
                 (1181101110)
@@ -406,7 +479,7 @@
             total_seconddose,
             total_booster,
         } = await getVaxMYData();
-        console.log(daily_booster);
+        //console.log(daily_booster);
         document.getElementById("daily_a").innerHTML =
             "+ " + daily_administration;
         document.getElementById("daily_f").innerHTML = "+ " + daily_firstdose;
@@ -421,9 +494,6 @@
     /*summary table*/
     (async () => {
         const stateData = await getSummaryData();
-        console.log(stateData.Melaka);
-        vat = "mlk";
-        vat2 = "Melaka";
         statenicknames = [
             "johor",
             "kedah",
@@ -462,7 +532,7 @@
         ];
         statenames.forEach((state, index) => {
             const nickname = statenicknames[index];
-            console.log(state, nickname);
+            //console.log(state, nickname);
             document.getElementById(nickname + "-cases").innerHTML = stateData[
                     state
                 ].avgCases
@@ -491,7 +561,6 @@
                 stateData[state].newDeathsTrend;
         });
     })();
-
     //console.log(vaxData);
     // let { baz, foo } = (function () {
     //   let foo = 0;

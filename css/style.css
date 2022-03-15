@@ -10,7 +10,10 @@
   margin: 0 0;
   padding: 0 0;
   font-family: "Open Sans";
-  background-color: #c8d6e5;
+}
+
+body {
+  background-color: aliceblue;
 }
 
 .container {
@@ -18,6 +21,7 @@
   margin: 0 auto;
   padding: 1%;
   background-color: white;
+  overflow: auto;
   /*border: 1px solid black;*/
 }
 
@@ -25,7 +29,6 @@
   width: 100%;
   margin: 0 auto;
   border-bottom: 2px solid black;
-  background-color: white;
 }
 
 .row {
@@ -38,7 +41,6 @@
 
 .container-95 {
   border: 1px solid black;
-  background-color: white;
 }
 
 .container60 {
@@ -47,7 +49,6 @@
   padding: 1%;
   /*border: 1px solid black;*/
   float: left;
-  background-color: white;
 }
 
 .thinfont {
@@ -69,13 +70,14 @@
 }
 
 .image-responsive {
-  width: 100%;
+  /*width: 100%;*/
   height: 5rem;
   background-color: white;
 }
 
 .text-right {
   text-align: right;
+  padding: 1%;
 }
 
 .text-center {
@@ -150,12 +152,21 @@ tr.spaceUnder > td {
   padding-bottom: 3%;
 }
 
+th {
+  background-color: #f1f2f6;
+}
+
 /*CSS for Footer Section*/
 .footer {
   background-color: aliceblue;
+  width: 90%;
+  margin: 0 auto;
+  padding: 1%;
+  overflow: auto;
 }
 
 /*CSS for summary table*/
-.summarytable {
+.width-lg {
+  width: 12% !important;
   /*border: 1px solid black;*/
 }
