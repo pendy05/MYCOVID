@@ -15,11 +15,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js">
     </script>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.js"></script
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>>-->
-    <!--Link to CSS file-->
 
+    <!--Link to CSS file-->
     <link rel="stylesheet" href="css/style.css" />
 </head>
 
@@ -461,9 +458,7 @@
         " " +
         today.getFullYear() +
         "  12:00am";
-    //console.log(today.getFullYear());
-    //console.log(today.toLocaleString("default", { month: "long" }));
-    //console.log(today.getDate());
+
     /*vaccination data per state*/
     drawStackedBar();
 
@@ -561,20 +556,6 @@
                 stateData[state].newDeathsTrend;
         });
     })();
-    //console.log(vaxData);
-    // let { baz, foo } = (function () {
-    //   let foo = 0;
-    //   var baz = 0;
-    //   for (let i = 0; i <= 0; i++) {
-    //     foo = 3;
-    //     baz = 40;
-    //   }
-    //   console.log(baz);
-    //   return { foo, baz };
-    // })();
-    // console.log(baz);
-
-    //getVaxStatesData();
     </script>
 </body>
 

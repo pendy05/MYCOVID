@@ -1,24 +1,6 @@
 //global settings for Chart.js
 Chart.defaults.font.family = "Open Sans";
 
-//variables to store population per state
-const johor_population = 3794200;
-const kedah_population = 2193600;
-const kelantan_population = 1928900;
-const melaka_population = 937800;
-const nsembilan_population = 1128900;
-const pahang_population = 1684700;
-const perak_population = 2509000;
-const perlis_population = 255500;
-const ppinang_population = 1774200;
-const sabah_population = 3832500;
-const sarawak_population = 2824700;
-const selangor_population = 6555100;
-const terengganu_population = 1275200;
-const kl_population = 1746600;
-const labuan_population = 100100;
-const putrajaya_population = 116100;
-
 //get vaccination data from MY states csv file
 async function getVaxStatesData() {
   const data = await fetch("data/vax_state.csv").then((response) =>
@@ -187,7 +169,6 @@ async function getVaxMYData() {
 }
 
 //get cases per state data
-//
 async function getSummaryData() {
   const stateCasesData = await fetch("data/cases_state.csv").then((response) =>
     response.text()
@@ -504,7 +485,6 @@ async function getSummaryData() {
         value.avgDeaths = value.avgDeaths + columns[3];
       }
     }
-    //console.log(deathTable);
   });
 
   /*Calculate average and trend of cases, deaths, hopsital admission and recovered case*/
@@ -629,111 +609,8 @@ async function getSummaryData() {
     );
   }
 
-  // remove duplicates from dates
-  //const unique_dates = Array.from(new Set(dates));
-  //console.log(unique_dates);
-  //console.log(stateData);
   return stateData;
 }
-
-/* Function to plot Chart using Chart.js */
-// async function drawLineChart(dates, state) {
-//   const data = await getData("covid19-public-main/epidemic/cases_state.csv");
-//   const ctx = document.getElementById("chart1").getContext("2d");
-//   //console.log(data.unique_dates);
-//   //console.log(data.johor);
-//   const myChart = new Chart(ctx, {
-//     type: "line",
-//     data: {
-//       labels: data.unique_dates,
-//       datasets: [
-//         {
-//           label: "New cases",
-//           data: data.johor.cases_new,
-//           borderColor: "#001234",
-//           backgroundColor: "#001234",
-//         },
-//         {
-//           label: "Import Cases",
-//           data: data.johor.cases_import,
-//           borderColor: "#0c51ff",
-//           backgroundColor: "#0c51ff",
-//         },
-//       ],
-//     },
-//     options: {
-//       scales: {
-//         x: {
-//           type: "timeseries",
-//           time: {
-//             unit: "month",
-//           },
-//           ticks: {
-//             score: "data",
-//           },
-//         },
-//       },
-//       elements: {
-//         point: {
-//           radius: 0,
-//         },
-//       },
-
-//       tooltips: {
-//         mode: "index",
-//         intersect: false,
-//         callbacks: {
-//           label: (item) =>
-//             item.dataset.label +
-//             ": " +
-//             this.originalValues[item.datasetIndex].data[item.dataIndex],
-//         },
-//       },
-//       hover: {
-//         mode: "index",
-//         intersect: false,
-//       },
-//     },
-//   });
-// }
-
-// async function drawPolarChart(statename) {
-//   const data = await getVaxData(statename);
-//   const ctx1 = document.getElementById("polarchart").getContext("2d");
-//   console.log(data);
-
-//   const myChart = new Chart(ctx1, {
-//     type: "polarArea",
-//     data: {
-//       labels: Object.keys(data),
-//       datasets: [
-//         {
-//           data: Object.values(data),
-//           backgroundColor: [
-//             "rgb(255, 99, 132)",
-//             "rgb(75, 192, 192)",
-//             "rgb(255, 205, 86)",
-//             "rgb(201, 203, 207)",
-//             "rgb(54, 162, 235)",
-//           ],
-//         },
-//       ],
-//     },
-
-//     options: {
-//       plugins: {
-//         title: {
-//           display: true,
-//           text: `Number of Vaccinated Citizens in ${statename}`,
-//           padding: {
-//             top: 10,
-//             bottom: 10,
-//           },
-//         },
-//       },
-//     },
-//   });
-// }
 
 async function drawStackedBar() {
   const labels = [
@@ -757,7 +634,6 @@ async function drawStackedBar() {
 
   //get states vaccination data
   const stateData = await getVaxStatesData();
-  //console.log(stateData);
   //store states data based on type of vaccination
   firstDoseData = [];
   secondDoseData = [];
