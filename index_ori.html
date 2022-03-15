@@ -22,20 +22,24 @@
   </head>
   <body>
     <!--Nav bar section starts here-->
-    <nav>
-      <div class="logo">
-        <img src="images/logo.png" alt="Web Logo" class="image-responsive" />
-      </div>
-      <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="#Summary">Summary</a>
-      <div class="animation start-home"></div>
-    </nav>
+    <div class="parent">
+      <nav id="navbar">
+        <div class="logo">
+          <a href="#Home"
+            ><img src="images/logo.png" alt="Web Logo" class="image-responsive"
+          /></a>
+        </div>
+        <a href="#Home">Home</a>
+        <a href="#Vaccination">Vaccination</a>
+        <a href="#Summary">Summary</a>
+        <div class="animation start-home"></div>
+      </nav>
+    </div>
 
     <!--Nav bar section ends here-->
-
+    <div class="container"><br /><br /><br /><br /></div>
     <!--Header section starts here-->
-    <section class="header">
+    <section class="header" id="Home">
       <div class="container">
         <h1>MYCOVID-19</h1>
         <h4>
@@ -46,18 +50,26 @@
     <!--Header section ends here-->
 
     <!--Overview section starts here-->
-    <section class="overview">
+    <section class="overview" id="Vaccination">
       <div class="container">
         <div class="container-95">
-          <div class="container60">
-            <h4>Vaccinated Population</h4>
-            <p style="font-size: small">Malaysia</p>
+          <div class="container-100">
+            <div class="container60">
+              <h4>Vaccinated Population</h4>
+              <p style="font-size: small">Malaysia</p>
+            </div>
+            <div class="container33">
+              <p
+                style="font-size: small; text-align: right"
+                id="overview-date"
+              ></p>
+            </div>
+            <div class="clearfix"></div>
           </div>
-          <div class="container33">
-            <p style="font-size: small; text-align: right">Updated on xx</p>
-          </div>
+
           <br />
           <div class="container60">
+            <br /><br />
             <table class="nth-table" id="overview-table" width="90%">
               <tr>
                 <td>Daily - Administration</td>
@@ -105,10 +117,10 @@
         <div class="clearfix"></div>
       </div>
     </section>
-    <!--Graph 1 section ends here-->
+    <!--Overview section ends here-->
 
     <!--Summary section starts here-->
-    <section class="summary">
+    <section class="summary" id="Summary">
       <div class="container">
         <div class="container-95">
           <div class="container60">
@@ -116,11 +128,14 @@
             <p style="font-size: small">At A Glance</p>
           </div>
           <div class="container33">
-            <p style="font-size: small; text-align: right">Updated on xx</p>
+            <p
+              style="font-size: small; text-align: right"
+              id="summary-date"
+            ></p>
           </div>
           <div class="clearfix"></div>
-          <div class="summarytable">
-            <table border="1" width="100%">
+          <div style="width: 99%; margin-left: auto; margin-right: auto">
+            <table width="100%">
               <tr>
                 <td>States</td>
                 <td class="text-right">Cases</td>
@@ -327,6 +342,27 @@
     <!--Footer section ends here-->
 
     <script>
+      //retrieve today date
+      const today = new Date();
+      document.getElementById("overview-date").innerHTML =
+        "Data as of " +
+        today.getDate() +
+        " " +
+        today.toLocaleString("default", { month: "long" }) +
+        " " +
+        today.getFullYear() +
+        "  12:00am";
+      document.getElementById("summary-date").innerHTML =
+        "Data as of " +
+        today.getDate() +
+        " " +
+        today.toLocaleString("default", { month: "long" }) +
+        " " +
+        today.getFullYear() +
+        "  12:00am";
+      //console.log(today.getFullYear());
+      //console.log(today.toLocaleString("default", { month: "long" }));
+      //console.log(today.getDate());
       /*vaccination data per state*/
       drawStackedBar();
 

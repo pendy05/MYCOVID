@@ -21,9 +21,9 @@ const putrajaya_population = 116100;
 
 //get vaccination data from MY states csv file
 async function getVaxStatesData() {
-  const data = await fetch(
-    "covid19-public-main\\vaccination\\vax_state.csv"
-  ).then((response) => response.text());
+  const data = await fetch("data\\vax_state.csv").then((response) =>
+    response.text()
+  );
 
   const stateData = {
     Johor: {
@@ -131,7 +131,7 @@ async function getVaxStatesData() {
 
 //get MY vaccination data from csv file
 async function getVaxMYData() {
-  const data = await fetch("vax_malaysia.csv").then((response) =>
+  const data = await fetch("data/vax_malaysia.csv").then((response) =>
     response.text()
   );
 
@@ -145,7 +145,7 @@ async function getVaxMYData() {
   var total_booster = 0;
   // get the last columns (last day record)
   table = data.split("\n").slice(-2).slice(0, 1);
-  //console.log(table);
+
   table.forEach((row) => {
     columns = row.split(",");
     daily_administration = columns[4]
@@ -172,12 +172,8 @@ async function getVaxMYData() {
     total_booster = columns[11]
       .toString()
       .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-    //console.log(daily_firstdose);
   });
 
-  //console.log(table[1]);
-
-  console.log(daily_administration);
   return {
     daily_administration,
     daily_firstdose,
@@ -193,16 +189,16 @@ async function getVaxMYData() {
 //get cases per state data
 //
 async function getSummaryData() {
-  const stateCasesData = await fetch(
-    "covid19-public-main/epidemic/cases_state.csv"
-  ).then((response) => response.text());
-  const stateDeathData = await fetch(
-    "covid19-public-main/epidemic/deaths_state.csv"
-  ).then((response) => response.text());
+  const stateCasesData = await fetch("data/cases_state.csv").then((response) =>
+    response.text()
+  );
+  const stateDeathData = await fetch("data/deaths_state.csv").then((response) =>
+    response.text()
+  );
 
-  const stateHospitalData = await fetch(
-    "covid19-public-main/epidemic/hospital.csv"
-  ).then((response) => response.text());
+  const stateHospitalData = await fetch("data/hospital.csv").then((response) =>
+    response.text()
+  );
 
   const dates = [];
   const stateData = {
@@ -468,7 +464,7 @@ async function getSummaryData() {
   - newDeathsTrend
   - hospitalAdmissionTrend
   */
-  const casesTable = stateCasesData.split("\n").splice(113).splice(0, 112);
+  const casesTable = stateCasesData.split("\n").splice(-113).splice(0, 112);
   casesTable.forEach((row) => {
     columns = row.split(",");
     for (var statename in stateData) {
@@ -484,7 +480,7 @@ async function getSummaryData() {
   });
   const hospitalTable = stateHospitalData
     .split("\n")
-    .splice(113)
+    .splice(-113)
     .splice(0, 112);
   hospitalTable.forEach((row) => {
     columns = row.split(",");
@@ -497,7 +493,8 @@ async function getSummaryData() {
       }
     }
   });
-  const deathTable = stateDeathData.split("\n").splice(113).splice(0, 112);
+  const deathTable = stateDeathData.split("\n").splice(-113).splice(0, 112);
+
   deathTable.forEach((row) => {
     columns = row.split(",");
     for (var statename in stateData) {
@@ -507,6 +504,7 @@ async function getSummaryData() {
         value.avgDeaths = value.avgDeaths + columns[3];
       }
     }
+    //console.log(deathTable);
   });
 
   /*Calculate average and trend of cases, deaths, hopsital admission and recovered case*/
@@ -531,7 +529,15 @@ async function getSummaryData() {
             100 +
           "%"
         : "0%";
-    value.avgCases = Math.floor(value.avgCases / 7);
+    value.avgCases = Math.floor(
+      value.avgCases[0] +
+        value.avgCases[1] +
+        value.avgCases[2] +
+        value.avgCases[3] +
+        value.avgCases[4] +
+        value.avgCases[5] +
+        value.avgCases[6] / 7
+    );
     value.recoveredCasesTrend =
       value.recoveredCases[0] == 0
         ? "+" + value.recoveredCases[6] + "%"
@@ -552,7 +558,15 @@ async function getSummaryData() {
             100 +
           "%"
         : "0%";
-    value.avgRecoveredCases = Math.floor(value.avgRecoveredCases / 7);
+    value.avgRecoveredCases = Math.floor(
+      value.avgRecoveredCases[0] +
+        value.avgRecoveredCases[1] +
+        value.avgRecoveredCases[2] +
+        value.avgRecoveredCases[3] +
+        value.avgRecoveredCases[4] +
+        value.avgRecoveredCases[5] +
+        value.avgRecoveredCases[6] / 7
+    );
     value.newDeathsTrend =
       value.newDeaths[0] == 0
         ? "+" + value.newDeaths[6] + "%"
@@ -571,7 +585,15 @@ async function getSummaryData() {
             100 +
           "%"
         : "0%";
-    value.avgDeaths = Math.floor(value.avgDeaths / 7);
+    value.avgDeaths = Math.floor(
+      value.avgDeaths[0] +
+        value.avgDeaths[1] +
+        value.avgDeaths[2] +
+        value.avgDeaths[3] +
+        value.avgDeaths[4] +
+        value.avgDeaths[5] +
+        value.avgDeaths[6] / 7
+    );
     value.hospitalAdmissionTrend =
       value.hospitalAdmission[0] == 0
         ? "+" + value.hospitalAdmission[6] + "%"
@@ -592,7 +614,15 @@ async function getSummaryData() {
             100 +
           "%"
         : "0%";
-    value.avghospitalAdmission = Math.floor(value.avghospitalAdmission / 7);
+    value.avghospitalAdmission = Math.floor(
+      value.avghospitalAdmission[0] +
+        value.avghospitalAdmission[1] +
+        value.avghospitalAdmission[2] +
+        value.avghospitalAdmission[3] +
+        value.avghospitalAdmission[4] +
+        value.avghospitalAdmission[5] +
+        value.avghospitalAdmission[6] / 7
+    );
   }
 
   // remove duplicates from dates
@@ -602,223 +632,104 @@ async function getSummaryData() {
   return stateData;
 }
 
-// async function getVaxData(statename) {
-//   const stateData = {
-//     Partial: 0,
-//     Full: 0,
-//     Booster: 0,
-//     accum: 0,
-//   };
-//   //the last 16 rows (16states)
-//   const data = await fetch(
-//     "covid19-public-main/vaccination/vax_state.csv"
-//   ).then((response) => response.text());
-//   //console.log(data);
-
-//   table = data.split("\n").slice(-16);
-//   console.log(table);
-//   table.forEach((row) => {
-//     columns = row.split(",");
-//     if (columns[1] == statename) {
-//       //console.log(row);
-//       console.log(columns[10]);
-//       stateData.Partial = columns[10];
-//       stateData.Full = columns[11];
-//       stateData.Booster = columns[12];
-//       stateData.accum = columns[13];
-//     }
-//   });
-//   //Data as of 23/02/2022
-//   //Source: https://www.dosm.gov.my/v1/index.php?r=columnnew/populationclock
-//   if (statename == "Johor") {
-//     //1 million
-//     data["Not Vaccinated"] =
-//       johor_population - stateData.accum < 0
-//         ? 0
-//         : johor_population - stateData.accum;
-//   } else if (statename == "Kedah") {
-//     data["Not Vaccinated"] =
-//       kedah_population - stateData.accum < 0
-//         ? 0
-//         : kedah_population - stateData.accum;
-//   } else if (statename == "Kelantan") {
-//     data["Not Vaccinated"] =
-//       kelantan_population - stateData.accum < 0
-//         ? 0
-//         : kelantan_population - stateData.accum;
-//   } else if (statename == "Melaka") {
-//     data["Not Vaccinated"] =
-//       melaka_population - stateData.accum < 0
-//         ? 0
-//         : melaka_population - stateData.accum;
-//   } else if (statename == "Negeri Sembilan") {
-//     data["Not Vaccinated"] =
-//       nsembilan_population - stateData.accum < 0
-//         ? 0
-//         : nsembilan_population - stateData.accum;
-//   } else if (statename == "Pahang") {
-//     data["Not Vaccinated"] =
-//       pahang_population - stateData.accum < 0
-//         ? 0
-//         : pahang_population - stateData.accum;
-//   } else if (statename == "Perak") {
-//     data["Not Vaccinated"] =
-//       perak_population - stateData.accum < 0
-//         ? 0
-//         : perak_population - stateData.accum;
-//   } else if (statename == "Perlis") {
-//     data["Not Vaccinated"] =
-//       perlis_population - stateData.accum < 0
-//         ? 0
-//         : perlis_population - stateData.accum;
-//   } else if (statename == "Pulau Pinang") {
-//     data["Not Vaccinated"] =
-//       ppinang_population - stateData.accum < 0
-//         ? 0
-//         : ppinang_population - stateData.accum;
-//   } else if (statename == "Sabah") {
-//     data["Not Vaccinated"] =
-//       sabah_population - stateData.accum < 0
-//         ? 0
-//         : sabah_population - stateData.accum;
-//   } else if (statename == "Sarawak") {
-//     data["Not Vaccinated"] =
-//       sarawak_population - stateData.accum < 0
-//         ? 0
-//         : sarawak_population - stateData.accum;
-//   } else if (statename == "Selangor") {
-//     data["Not Vaccinated"] =
-//       elangor_population - stateData.accum < 0
-//         ? 0
-//         : selangor_population - stateData.accum;
-//   } else if (statename == "Terengganu") {
-//     data["Not Vaccinated"] =
-//       terengganu_population - stateData.accum < 0
-//         ? 0
-//         : terengganu_population - stateData.accum;
-//   } else if (statename == "W.P. Kuala Lumpur") {
-//     data["Not Vaccinated"] =
-//       kl_population - stateData.accum < 0 ? 0 : kl_population - stateData.accum;
-//   } else if (statename == "W.P. Labuan") {
-//     data["Not Vaccinated"] =
-//       labuan_population - stateData.accum < 0
-//         ? 0
-//         : labuan_population - stateData.accum;
-//   } else if (statename == "W.P. Putrajaya") {
-//     data["Not Vaccinated"] =
-//       putrajaya_population - stateData.accum < 0
-//         ? 0
-//         : putrajaya_population - stateData.accum;
-//   }
-
-//   delete stateData.accum; // we do not want to show total accumulation on vaccination in chart
-//   if (stateData["Not Vaccinated"] == 0) {
-//     // if all are vaccinated, remove the data from being plotted
-//     delete stateData["Not Vaccinated"];
-//   }
-
-//   return stateData;
-// }
-//getVaxData();
-
 /* Function to plot Chart using Chart.js */
-async function drawLineChart(dates, state) {
-  const data = await getData("covid19-public-main/epidemic/cases_state.csv");
-  const ctx = document.getElementById("chart1").getContext("2d");
-  //console.log(data.unique_dates);
-  //console.log(data.johor);
-  const myChart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: data.unique_dates,
-      datasets: [
-        {
-          label: "New cases",
-          data: data.johor.cases_new,
-          borderColor: "#001234",
-          backgroundColor: "#001234",
-        },
-        {
-          label: "Import Cases",
-          data: data.johor.cases_import,
-          borderColor: "#0c51ff",
-          backgroundColor: "#0c51ff",
-        },
-      ],
-    },
-    options: {
-      scales: {
-        x: {
-          type: "timeseries",
-          time: {
-            unit: "month",
-          },
-          ticks: {
-            score: "data",
-          },
-        },
-      },
-      elements: {
-        point: {
-          radius: 0,
-        },
-      },
+// async function drawLineChart(dates, state) {
+//   const data = await getData("covid19-public-main/epidemic/cases_state.csv");
+//   const ctx = document.getElementById("chart1").getContext("2d");
+//   //console.log(data.unique_dates);
+//   //console.log(data.johor);
+//   const myChart = new Chart(ctx, {
+//     type: "line",
+//     data: {
+//       labels: data.unique_dates,
+//       datasets: [
+//         {
+//           label: "New cases",
+//           data: data.johor.cases_new,
+//           borderColor: "#001234",
+//           backgroundColor: "#001234",
+//         },
+//         {
+//           label: "Import Cases",
+//           data: data.johor.cases_import,
+//           borderColor: "#0c51ff",
+//           backgroundColor: "#0c51ff",
+//         },
+//       ],
+//     },
+//     options: {
+//       scales: {
+//         x: {
+//           type: "timeseries",
+//           time: {
+//             unit: "month",
+//           },
+//           ticks: {
+//             score: "data",
+//           },
+//         },
+//       },
+//       elements: {
+//         point: {
+//           radius: 0,
+//         },
+//       },
 
-      tooltips: {
-        mode: "index",
-        intersect: false,
-        callbacks: {
-          label: (item) =>
-            item.dataset.label +
-            ": " +
-            this.originalValues[item.datasetIndex].data[item.dataIndex],
-        },
-      },
-      hover: {
-        mode: "index",
-        intersect: false,
-      },
-    },
-  });
-}
+//       tooltips: {
+//         mode: "index",
+//         intersect: false,
+//         callbacks: {
+//           label: (item) =>
+//             item.dataset.label +
+//             ": " +
+//             this.originalValues[item.datasetIndex].data[item.dataIndex],
+//         },
+//       },
+//       hover: {
+//         mode: "index",
+//         intersect: false,
+//       },
+//     },
+//   });
+// }
 
-async function drawPolarChart(statename) {
-  const data = await getVaxData(statename);
-  const ctx1 = document.getElementById("polarchart").getContext("2d");
-  console.log(data);
+// async function drawPolarChart(statename) {
+//   const data = await getVaxData(statename);
+//   const ctx1 = document.getElementById("polarchart").getContext("2d");
+//   console.log(data);
 
-  const myChart = new Chart(ctx1, {
-    type: "polarArea",
-    data: {
-      labels: Object.keys(data),
-      datasets: [
-        {
-          data: Object.values(data),
-          backgroundColor: [
-            "rgb(255, 99, 132)",
-            "rgb(75, 192, 192)",
-            "rgb(255, 205, 86)",
-            "rgb(201, 203, 207)",
-            "rgb(54, 162, 235)",
-          ],
-        },
-      ],
-    },
+//   const myChart = new Chart(ctx1, {
+//     type: "polarArea",
+//     data: {
+//       labels: Object.keys(data),
+//       datasets: [
+//         {
+//           data: Object.values(data),
+//           backgroundColor: [
+//             "rgb(255, 99, 132)",
+//             "rgb(75, 192, 192)",
+//             "rgb(255, 205, 86)",
+//             "rgb(201, 203, 207)",
+//             "rgb(54, 162, 235)",
+//           ],
+//         },
+//       ],
+//     },
 
-    options: {
-      plugins: {
-        title: {
-          display: true,
-          text: `Number of Vaccinated Citizens in ${statename}`,
-          padding: {
-            top: 10,
-            bottom: 10,
-          },
-        },
-      },
-    },
-  });
-}
+//     options: {
+//       plugins: {
+//         title: {
+//           display: true,
+//           text: `Number of Vaccinated Citizens in ${statename}`,
+//           padding: {
+//             top: 10,
+//             bottom: 10,
+//           },
+//         },
+//       },
+//     },
+//   });
+// }
 
 async function drawStackedBar() {
   const labels = [
